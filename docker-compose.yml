@@ -3,7 +3,7 @@ version: '3.8'
 services:
   web:
     build: .
-    container_name: nextjs_web
+    container_name: gamervault
     ports:
       - '3000:3000'
     depends_on:
