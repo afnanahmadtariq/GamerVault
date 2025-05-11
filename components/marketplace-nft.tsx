@@ -1,7 +1,7 @@
+import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
-import { Check, ShoppingCart } from "lucide-react"
 
 interface MarketplaceNFTProps {
   id: string
@@ -14,53 +14,40 @@ interface MarketplaceNFTProps {
 }
 
 export function MarketplaceNFT({ id, name, image, game, rarity, price, seller }: MarketplaceNFTProps) {
-  // Map rarity to color
-  const rarityColor =
-    {
-      Common: "bg-gray-500",
-      Uncommon: "bg-green-500",
-      Rare: "bg-blue-500",
-      Epic: "bg-purple-500",
-      Legendary: "bg-yellow-500",
-    }[rarity] || "bg-gray-500"
-
   return (
     <Card className="overflow-hidden">
       <div className="aspect-square relative">
-        <img src={image || "/placeholder.svg"} alt={name} className="h-full w-full object-cover" />
-        <div className="absolute top-2 right-2">
-          <Badge variant="secondary" className="font-medium">
-            {game}
-          </Badge>
-        </div>
-        <div className="absolute bottom-2 left-2">
-          <Badge className={`${rarityColor} text-white`}>{rarity}</Badge>
-        </div>
+        <img
+          src={image || "/placeholder.svg"}
+          alt={name}
+          className="h-full w-full object-cover transition-all hover:scale-105"
+        />
+        <Badge
+          className="absolute top-2 right-2"
+          variant={rarity === "Legendary" ? "destructive" : rarity === "Epic" ? "default" : "secondary"}
+        >
+          {rarity}
+        </Badge>
       </div>
-      <CardHeader className="p-4 pb-0">
-        <div className="flex items-center justify-between">
-          <h3 className="font-semibold text-lg">{name}</h3>
-          <div className="font-bold text-lg">{price}</div>
+      <CardHeader className="p-4">
+        <div className="flex justify-between items-start">
+          <div>
+            <h3 className="font-semibold text-lg leading-none">{name}</h3>
+            <p className="text-sm text-muted-foreground">{game}</p>
+          </div>
+          <div className="text-right">
+            <div className="text-xs text-muted-foreground">Price</div>
+            <div className="font-bold">{price} coins</div>
+          </div>
         </div>
-        <p className="text-sm text-muted-foreground">
-          Sold by <span className="font-medium">{seller}</span>
-        </p>
       </CardHeader>
-      <CardContent className="p-4 pt-2">
-        <div className="flex items-center gap-2">
-          <div className="h-2 w-2 rounded-full bg-green-500" />
-          <span className="text-xs text-muted-foreground">Available Now</span>
-        </div>
+      <CardContent className="p-4 pt-0">
+        <div className="text-xs text-muted-foreground">Seller: {seller}</div>
       </CardContent>
-      <CardFooter className="p-4 pt-0 flex gap-2">
-        <Button className="w-full" size="sm">
-          <ShoppingCart className="mr-2 h-4 w-4" />
-          Buy Now
-        </Button>
-        <Button variant="outline" size="sm" className="w-full">
-          <Check className="mr-2 h-4 w-4" />
-          Make Offer
-        </Button>
+      <CardFooter className="p-4">
+        <Link href={`/marketplace/${id}`} className="w-full">
+          <Button className="w-full">View & Purchase</Button>
+        </Link>
       </CardFooter>
     </Card>
   )

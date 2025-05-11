@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { GamepadIcon as GameController, Trophy, Wallet, Zap } from "lucide-react"
 
@@ -8,26 +9,26 @@ export default function Home() {
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
-            <GameController className="h-6 w-6 text-primary" />
+            <GameController className="h-6 w-6 text-primary" aria-hidden="true" />
             <span className="text-xl font-bold">GamerVault</span>
           </div>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link href="/marketplace" className="text-sm font-medium hover:text-primary">
+          <nav className="hidden md:flex items-center gap-6" aria-label="Main navigation">
+            <Link href="/marketplace" className="text-sm font-medium hover:text-primary transition-colors">
               Marketplace
             </Link>
-            <Link href="/achievements" className="text-sm font-medium hover:text-primary">
+            <Link href="/achievements" className="text-sm font-medium hover:text-primary transition-colors">
               Achievements
             </Link>
-            <Link href="/leaderboard" className="text-sm font-medium hover:text-primary">
+            <Link href="/leaderboard" className="text-sm font-medium hover:text-primary transition-colors">
               Leaderboard
             </Link>
           </nav>
           <div className="flex items-center gap-4">
             <Link href="/auth/login">
-              <Button variant="outline">Login</Button>
+              <Button variant="outline" className="transition-colors">Login</Button>
             </Link>
             <Link href="/auth/register">
-              <Button>Sign Up</Button>
+              <Button className="transition-colors">Sign Up</Button>
             </Link>
           </div>
         </div>
@@ -48,14 +49,14 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
                   <Link href="/auth/register">
-                    <Button size="lg" className="gap-1">
-                      <Zap className="h-4 w-4" />
+                    <Button size="lg" className="gap-1 transition-colors">
+                      <Zap className="h-4 w-4" aria-hidden="true" />
                       Get Started
                     </Button>
                   </Link>
                   <Link href="/marketplace">
-                    <Button size="lg" variant="outline" className="gap-1">
-                      <Wallet className="h-4 w-4" />
+                    <Button size="lg" variant="outline" className="gap-1 transition-colors">
+                      <Wallet className="h-4 w-4" aria-hidden="true" />
                       Browse Marketplace
                     </Button>
                   </Link>
@@ -71,10 +72,12 @@ export default function Home() {
                           className="group relative overflow-hidden rounded-lg bg-gradient-to-br from-purple-500/20 to-blue-500/20 p-1"
                         >
                           <div className="aspect-square overflow-hidden rounded-md bg-muted">
-                            <img
+                            <Image
                               src={`/placeholder.svg?height=150&width=150&text=NFT ${i}`}
                               alt={`NFT ${i}`}
-                              className="h-full w-full object-cover transition-all group-hover:scale-105"
+                              width={150}
+                              height={150}
+                              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                             />
                           </div>
                         </div>
@@ -98,27 +101,27 @@ export default function Home() {
               </div>
             </div>
             <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 py-12 md:grid-cols-3">
-              <div className="flex flex-col items-center space-y-2 rounded-lg border p-6 shadow-sm">
+              <div className="flex flex-col items-center space-y-2 rounded-lg border p-6 shadow-sm transition-shadow hover:shadow-md">
                 <div className="rounded-full bg-primary/10 p-3">
-                  <Trophy className="h-6 w-6 text-primary" />
+                  <Trophy className="h-6 w-6 text-primary" aria-hidden="true" />
                 </div>
                 <h3 className="text-xl font-bold">Achievement Showcase</h3>
                 <p className="text-center text-muted-foreground">
                   Display your gaming achievements from various platforms in one place.
                 </p>
               </div>
-              <div className="flex flex-col items-center space-y-2 rounded-lg border p-6 shadow-sm">
+              <div className="flex flex-col items-center space-y-2 rounded-lg border p-6 shadow-sm transition-shadow hover:shadow-md">
                 <div className="rounded-full bg-primary/10 p-3">
-                  <Wallet className="h-6 w-6 text-primary" />
+                  <Wallet className="h-6 w-6 text-primary" aria-hidden="true" />
                 </div>
                 <h3 className="text-xl font-bold">NFT Collection</h3>
                 <p className="text-center text-muted-foreground">
                   Showcase your simulated NFT collection with detailed information and visuals.
                 </p>
               </div>
-              <div className="flex flex-col items-center space-y-2 rounded-lg border p-6 shadow-sm">
+              <div className="flex flex-col items-center space-y-2 rounded-lg border p-6 shadow-sm transition-shadow hover:shadow-md">
                 <div className="rounded-full bg-primary/10 p-3">
-                  <GameController className="h-6 w-6 text-primary" />
+                  <GameController className="h-6 w-6 text-primary" aria-hidden="true" />
                 </div>
                 <h3 className="text-xl font-bold">Gamer Profile</h3>
                 <p className="text-center text-muted-foreground">
@@ -134,17 +137,17 @@ export default function Home() {
           <p className="text-sm text-muted-foreground">
             &copy; {new Date().getFullYear()} GamerVault. All rights reserved.
           </p>
-          <div className="flex gap-4 text-sm text-muted-foreground">
-            <Link href="#" className="hover:text-foreground">
+          <nav className="flex gap-4 text-sm text-muted-foreground" aria-label="Footer navigation">
+            <Link href="#" className="hover:text-foreground transition-colors">
               Terms
             </Link>
-            <Link href="#" className="hover:text-foreground">
+            <Link href="#" className="hover:text-foreground transition-colors">
               Privacy
             </Link>
-            <Link href="#" className="hover:text-foreground">
+            <Link href="#" className="hover:text-foreground transition-colors">
               Contact
             </Link>
-          </div>
+          </nav>
         </div>
       </footer>
     </div>

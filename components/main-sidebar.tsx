@@ -1,6 +1,8 @@
 "use client"
+
+import { useEffect, useState } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import {
   Sidebar,
   SidebarContent,
@@ -9,30 +11,38 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
+  SidebarSeparator,
 } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { LanguageSelector } from "@/components/language-selector"
 import {
-  LayoutDashboard,
-  ShoppingBag,
-  Trophy,
-  Backpack,
-  Users,
-  Settings,
-  Wallet,
-  BarChart3,
-  Shield,
-  LogOut,
   Award,
-  Plus,
+  Box,
+  GamepadIcon as GameController,
+  LayoutDashboard,
+  LogOut,
+  Settings,
+  ShoppingBag,
+  Users,
 } from "lucide-react"
-import { cn } from "@/lib/utils"
 
 export function MainSidebar() {
   const pathname = usePathname()
-  const { isMobile } = useSidebar()
+  const router = useRouter()
+  const [user, setUser] = useState<{ name: string; email: string; avatar: string } | null>(null)
+
+  useEffect(() => {
+    // Get user data from localStorage
+    const userData = localStorage.getItem("user")
+    if (userData) {
+      setUser(JSON.parse(userData))
+    }
+  }, [])
+
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn")
+    localStorage.removeItem("user")
+    router.push("/")
+  }
 
   const navigation = [
     {
@@ -48,37 +58,17 @@ export function MainSidebar() {
     {
       name: "Achievements",
       href: "/achievements",
-      icon: Trophy,
+      icon: Award,
     },
     {
       name: "Inventory",
       href: "/inventory",
-      icon: Backpack,
+      icon: Box,
     },
     {
       name: "Social",
       href: "/social",
       icon: Users,
-    },
-    {
-      name: "Wallet",
-      href: "/wallet",
-      icon: Wallet,
-    },
-    {
-      name: "Leaderboard",
-      href: "/leaderboard",
-      icon: Award,
-    },
-    {
-      name: "Analytics",
-      href: "/analytics",
-      icon: BarChart3,
-    },
-    {
-      name: "Security",
-      href: "/security",
-      icon: Shield,
     },
     {
       name: "Settings",
@@ -89,63 +79,47 @@ export function MainSidebar() {
 
   return (
     <Sidebar>
-      <SidebarHeader className="border-b">
-        <div className="flex items-center justify-between px-2 py-3">
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <div className="relative h-8 w-8 overflow-hidden rounded-lg bg-gradient-to-br from-purple-600 to-blue-500">
-              <div className="absolute inset-0 flex items-center justify-center text-white font-bold">GV</div>
-            </div>
-            <span className="text-xl font-bold">GamerVault</span>
-          </Link>
-          {!isMobile && (
-            <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
-              <Plus className="h-4 w-4" />
-              <span className="sr-only">Create</span>
-            </Button>
-          )}
+      <SidebarHeader>
+        <div className="flex items-center gap-2 px-4 py-2">
+          <GameController className="h-6 w-6 text-primary" />
+          <span className="text-xl font-bold">GamerVault</span>
         </div>
       </SidebarHeader>
-
-      <SidebarContent className="px-2 py-4">
+      <SidebarContent>
         <SidebarMenu>
-          {navigation.map((item) => {
-            const isActive = pathname === item.href
-            return (
-              <SidebarMenuItem key={item.name}>
-                <SidebarMenuButton asChild isActive={isActive} tooltip={item.name}>
-                  <Link href={item.href}>
-                    <item.icon className={cn("h-5 w-5")} />
-                    <span>{item.name}</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            )
-          })}
+          {navigation.map((item) => (
+            <SidebarMenuItem key={item.name}>
+              <SidebarMenuButton asChild isActive={pathname === item.href}>
+                <Link href={item.href}>
+                  <item.icon className="h-5 w-5" />
+                  <span>{item.name}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
         </SidebarMenu>
       </SidebarContent>
-
-      <SidebarFooter className="border-t">
-        <div className="px-2 py-3">
-          <div className="mb-2 px-3">
-            <LanguageSelector />
-          </div>
-          <div className="flex items-center justify-between px-3">
-            <div className="flex items-center">
-              <Avatar className="h-8 w-8">
-                <AvatarImage src="/placeholder.svg?height=32&width=32" />
-                <AvatarFallback>GV</AvatarFallback>
-              </Avatar>
-              <div className="ml-2">
-                <p className="text-sm font-medium">Player One</p>
-                <p className="text-xs text-muted-foreground">Level 42</p>
+      <SidebarSeparator />
+      <SidebarFooter>
+        {user && (
+          <div className="px-4 py-2">
+            <div className="flex items-center gap-3 rounded-md p-2">
+              <img
+                src={user.avatar || "/placeholder.svg"}
+                alt={user.name}
+                className="h-10 w-10 rounded-full bg-muted"
+              />
+              <div className="flex flex-col">
+                <span className="text-sm font-medium">{user.name}</span>
+                <span className="text-xs text-muted-foreground">{user.email}</span>
               </div>
+              <Button variant="ghost" size="icon" className="ml-auto" onClick={handleLogout} title="Logout">
+                <LogOut className="h-4 w-4" />
+                <span className="sr-only">Logout</span>
+              </Button>
             </div>
-            <Button size="icon" variant="ghost" className="h-8 w-8">
-              <LogOut className="h-4 w-4" />
-              <span className="sr-only">Log out</span>
-            </Button>
           </div>
-        </div>
+        )}
       </SidebarFooter>
     </Sidebar>
   )

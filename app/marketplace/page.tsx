@@ -1,120 +1,260 @@
-import type { Metadata } from "next"
-import { Card, CardContent, Grid, Section, Flex } from "@/components/layout-system"
-import { MarketplaceNFT } from "@/components/marketplace-nft"
-import { PageHeader } from "@/components/page-header"
-import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Search, Filter, SortDesc } from "lucide-react"
-
-export const metadata: Metadata = {
-  title: "Marketplace | GamerVault",
-  description: "Browse and trade gaming assets",
-}
+import { Filter, Search } from "lucide-react"
+import { MainLayout } from "@/components/main-layout"
+import { PageHeader } from "@/components/page-header"
+import { MarketplaceNFT } from "@/components/marketplace-nft"
 
 export default function MarketplacePage() {
   return (
-    <>
-      <PageHeader title="Marketplace" description="Browse and trade gaming assets" />
+    <MainLayout>
+      <PageHeader title="Marketplace" description="Discover and collect unique gaming NFTs">
+        <div className="flex items-center gap-2">
+          <div className="relative">
+            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Input type="search" placeholder="Search NFTs..." className="w-[200px] pl-8 md:w-[300px]" />
+          </div>
+        </div>
+      </PageHeader>
 
-      <Section>
-        <Card className="mb-6">
-          <CardContent className="pt-6">
-            <Flex gap="default" className="flex-col md:flex-row">
-              <div className="relative flex-grow">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input placeholder="Search NFTs, collections, games..." className="pl-10" />
-              </div>
-              <Flex gap="small">
-                <Button variant="outline" size="icon">
-                  <Filter className="h-4 w-4" />
-                </Button>
-                <Button variant="outline" size="icon">
-                  <SortDesc className="h-4 w-4" />
-                </Button>
-              </Flex>
-            </Flex>
-          </CardContent>
-        </Card>
+      <Card className="mb-6">
+        <CardContent className="p-6">
+          <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
+            <div className="flex items-center gap-2">
+              <Filter className="h-4 w-4" />
+              <span className="text-sm font-medium">Filters:</span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 w-full md:w-auto">
+              <Select defaultValue="all">
+                <SelectTrigger id="game-filter" className="w-full md:w-[180px]">
+                  <SelectValue placeholder="All Games" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Games</SelectItem>
+                  <SelectItem value="epic-quest">Epic Quest</SelectItem>
+                  <SelectItem value="dragon-riders">Dragon Riders</SelectItem>
+                  <SelectItem value="wizard-wars">Wizard Wars</SelectItem>
+                  <SelectItem value="shadow-assassin">Shadow Assassin</SelectItem>
+                  <SelectItem value="racing-legends">Racing Legends</SelectItem>
+                </SelectContent>
+              </Select>
 
-        <Tabs defaultValue="all">
-          <TabsList className="mb-6">
-            <TabsTrigger value="all">All Items</TabsTrigger>
-            <TabsTrigger value="art">Art</TabsTrigger>
-            <TabsTrigger value="collectibles">Collectibles</TabsTrigger>
-            <TabsTrigger value="game-items">Game Items</TabsTrigger>
-          </TabsList>
+              <Select defaultValue="all">
+                <SelectTrigger id="rarity-filter" className="w-full md:w-[180px]">
+                  <SelectValue placeholder="All Rarities" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Rarities</SelectItem>
+                  <SelectItem value="common">Common</SelectItem>
+                  <SelectItem value="uncommon">Uncommon</SelectItem>
+                  <SelectItem value="rare">Rare</SelectItem>
+                  <SelectItem value="epic">Epic</SelectItem>
+                  <SelectItem value="legendary">Legendary</SelectItem>
+                </SelectContent>
+              </Select>
 
-          <TabsContent value="all" className="mt-0">
-            <Grid cols={4} gap="default">
-              <MarketplaceNFT
-                id="1"
-                name="Cosmic Blade"
-                price={120}
-                image="/placeholder.svg?height=400&width=400"
-                creator="CryptoArtist"
-                game="Stellar Conquest"
-              />
-              <MarketplaceNFT
-                id="2"
-                name="Dragon Egg"
-                price={350}
-                image="/placeholder.svg?height=400&width=400"
-                creator="MythicForge"
-                game="Dragon Realms"
-              />
-              <MarketplaceNFT
-                id="3"
-                name="Enchanted Armor"
-                price={200}
-                image="/placeholder.svg?height=400&width=400"
-                creator="LegendCrafter"
-                game="Epic Quest"
-              />
-              <MarketplaceNFT
-                id="4"
-                name="Mystic Wand"
-                price={175}
-                image="/placeholder.svg?height=400&width=400"
-                creator="WizardWorks"
-                game="Arcane Legends"
-              />
-              <MarketplaceNFT
-                id="5"
-                name="Golden Crown"
-                price={500}
-                image="/placeholder.svg?height=400&width=400"
-                creator="RoyalForge"
-                game="Kingdom Wars"
-              />
-              <MarketplaceNFT
-                id="6"
-                name="Stealth Cloak"
-                price={150}
-                image="/placeholder.svg?height=400&width=400"
-                creator="ShadowCraft"
-                game="Night Raiders"
-              />
-              <MarketplaceNFT
-                id="7"
-                name="Plasma Rifle"
-                price={280}
-                image="/placeholder.svg?height=400&width=400"
-                creator="FutureTech"
-                game="Galactic Warfare"
-              />
-              <MarketplaceNFT
-                id="8"
-                name="Ancient Relic"
-                price={420}
-                image="/placeholder.svg?height=400&width=400"
-                creator="TreasureHunter"
-                game="Lost Civilizations"
-              />
-            </Grid>
-          </TabsContent>
-        </Tabs>
-      </Section>
-    </>
+              <Select defaultValue="newest">
+                <SelectTrigger id="sort-by" className="w-full md:w-[180px]">
+                  <SelectValue placeholder="Sort By" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="newest">Newest</SelectItem>
+                  <SelectItem value="price-low">Price: Low to High</SelectItem>
+                  <SelectItem value="price-high">Price: High to Low</SelectItem>
+                  <SelectItem value="name-asc">Name: A to Z</SelectItem>
+                  <SelectItem value="name-desc">Name: Z to A</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select defaultValue="all">
+                <SelectTrigger id="price-range" className="w-full md:w-[180px]">
+                  <SelectValue placeholder="Price Range" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Prices</SelectItem>
+                  <SelectItem value="under-500">Under 500</SelectItem>
+                  <SelectItem value="500-1000">500 - 1,000</SelectItem>
+                  <SelectItem value="1000-2000">1,000 - 2,000</SelectItem>
+                  <SelectItem value="over-2000">Over 2,000</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Tabs defaultValue="all">
+        <TabsList className="mb-6">
+          <TabsTrigger value="all">All NFTs</TabsTrigger>
+          <TabsTrigger value="weapons">Weapons</TabsTrigger>
+          <TabsTrigger value="armor">Armor</TabsTrigger>
+          <TabsTrigger value="mounts">Mounts</TabsTrigger>
+          <TabsTrigger value="collectibles">Collectibles</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="all">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <MarketplaceNFT
+              id="market-1"
+              name="Excalibur"
+              image="/placeholder.svg?height=300&width=300&text=Excalibur"
+              game="Epic Quest"
+              rarity="Legendary"
+              price={2500}
+              seller="GameMaster"
+            />
+            <MarketplaceNFT
+              id="market-2"
+              name="Phoenix Mount"
+              image="/placeholder.svg?height=300&width=300&text=Phoenix+Mount"
+              game="Dragon Riders"
+              rarity="Legendary"
+              price={5000}
+              seller="DragonLord"
+            />
+            <MarketplaceNFT
+              id="market-3"
+              name="Stealth Armor"
+              image="/placeholder.svg?height=300&width=300&text=Stealth+Armor"
+              game="Shadow Assassin"
+              rarity="Epic"
+              price={1200}
+              seller="NightStalker"
+            />
+            <MarketplaceNFT
+              id="market-4"
+              name="Wizard's Grimoire"
+              image="/placeholder.svg?height=300&width=300&text=Wizard's+Grimoire"
+              game="Wizard Wars"
+              rarity="Epic"
+              price={1500}
+              seller="Merlin"
+            />
+            <MarketplaceNFT
+              id="market-5"
+              name="Healing Potion"
+              image="/placeholder.svg?height=300&width=300&text=Healing+Potion"
+              game="Epic Quest"
+              rarity="Common"
+              price={50}
+              seller="Alchemist"
+            />
+            <MarketplaceNFT
+              id="market-6"
+              name="Racing Car Skin"
+              image="/placeholder.svg?height=300&width=300&text=Racing+Car+Skin"
+              game="Racing Legends"
+              rarity="Rare"
+              price={800}
+              seller="SpeedDemon"
+            />
+          </div>
+        </TabsContent>
+
+        <TabsContent value="weapons">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <MarketplaceNFT
+              id="market-1"
+              name="Excalibur"
+              image="/placeholder.svg?height=300&width=300&text=Excalibur"
+              game="Epic Quest"
+              rarity="Legendary"
+              price={2500}
+              seller="GameMaster"
+            />
+            <MarketplaceNFT
+              id="market-7"
+              name="Frost Bow"
+              image="/placeholder.svg?height=300&width=300&text=Frost+Bow"
+              game="Epic Quest"
+              rarity="Epic"
+              price={1800}
+              seller="IceHunter"
+            />
+            <MarketplaceNFT
+              id="market-8"
+              name="Shadow Dagger"
+              image="/placeholder.svg?height=300&width=300&text=Shadow+Dagger"
+              game="Shadow Assassin"
+              rarity="Rare"
+              price={950}
+              seller="NightStalker"
+            />
+          </div>
+        </TabsContent>
+
+        {/* Other tab contents would be similar */}
+        <TabsContent value="armor">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <MarketplaceNFT
+              id="market-3"
+              name="Stealth Armor"
+              image="/placeholder.svg?height=300&width=300&text=Stealth+Armor"
+              game="Shadow Assassin"
+              rarity="Epic"
+              price={1200}
+              seller="NightStalker"
+            />
+            <MarketplaceNFT
+              id="market-9"
+              name="Dragon Scale Armor"
+              image="/placeholder.svg?height=300&width=300&text=Dragon+Scale+Armor"
+              game="Dragon Riders"
+              rarity="Epic"
+              price={2200}
+              seller="DragonLord"
+            />
+          </div>
+        </TabsContent>
+
+        <TabsContent value="mounts">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <MarketplaceNFT
+              id="market-2"
+              name="Phoenix Mount"
+              image="/placeholder.svg?height=300&width=300&text=Phoenix+Mount"
+              game="Dragon Riders"
+              rarity="Legendary"
+              price={5000}
+              seller="DragonLord"
+            />
+          </div>
+        </TabsContent>
+
+        <TabsContent value="collectibles">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <MarketplaceNFT
+              id="market-4"
+              name="Wizard's Grimoire"
+              image="/placeholder.svg?height=300&width=300&text=Wizard's+Grimoire"
+              game="Wizard Wars"
+              rarity="Epic"
+              price={1500}
+              seller="Merlin"
+            />
+            <MarketplaceNFT
+              id="market-5"
+              name="Healing Potion"
+              image="/placeholder.svg?height=300&width=300&text=Healing+Potion"
+              game="Epic Quest"
+              rarity="Common"
+              price={50}
+              seller="Alchemist"
+            />
+            <MarketplaceNFT
+              id="market-6"
+              name="Racing Car Skin"
+              image="/placeholder.svg?height=300&width=300&text=Racing+Car+Skin"
+              game="Racing Legends"
+              rarity="Rare"
+              price={800}
+              seller="SpeedDemon"
+            />
+          </div>
+        </TabsContent>
+      </Tabs>
+    </MainLayout>
   )
 }

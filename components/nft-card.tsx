@@ -1,7 +1,8 @@
+import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
-import { Eye } from "lucide-react"
+import { Card, CardFooter, CardHeader } from "@/components/ui/card"
+import { Calendar, ExternalLink } from "lucide-react"
 
 interface NFTCardProps {
   id: string
@@ -13,51 +14,40 @@ interface NFTCardProps {
 }
 
 export function NFTCard({ id, name, image, game, rarity, acquired }: NFTCardProps) {
-  // Map rarity to color
-  const rarityColor =
-    {
-      Common: "bg-gray-500",
-      Uncommon: "bg-green-500",
-      Rare: "bg-blue-500",
-      Epic: "bg-purple-500",
-      Legendary: "bg-yellow-500",
-    }[rarity] || "bg-gray-500"
-
-  // Format date
-  const formattedDate = new Date(acquired).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  })
-
   return (
-    <Card className="overflow-hidden h-full flex flex-col">
+    <Card className="overflow-hidden">
       <div className="aspect-square relative">
-        <img src={image || "/placeholder.svg"} alt={name} className="h-full w-full object-cover" />
-        <div className="absolute top-2 right-2">
-          <Badge variant="secondary" className="font-medium">
-            {game}
-          </Badge>
-        </div>
-        <div className="absolute bottom-2 left-2">
-          <Badge className={`${rarityColor} text-white`}>{rarity}</Badge>
-        </div>
+        <img
+          src={image || "/placeholder.svg"}
+          alt={name}
+          className="h-full w-full object-cover transition-all hover:scale-105"
+        />
+        <Badge
+          className="absolute top-2 right-2"
+          variant={rarity === "Legendary" ? "destructive" : rarity === "Epic" ? "default" : "secondary"}
+        >
+          {rarity}
+        </Badge>
       </div>
-      <CardHeader className="p-4 pb-0">
-        <h3 className="font-semibold text-lg">{name}</h3>
-        <p className="text-sm text-muted-foreground">Acquired {formattedDate}</p>
-      </CardHeader>
-      <CardContent className="p-4 pt-2 flex-grow">
-        <div className="flex items-center gap-2">
-          <div className="h-2 w-2 rounded-full bg-green-500" />
-          <span className="text-xs text-muted-foreground">In Your Collection</span>
+      <CardHeader className="p-4">
+        <div className="flex justify-between items-start">
+          <div>
+            <h3 className="font-semibold text-lg leading-none">{name}</h3>
+            <p className="text-sm text-muted-foreground">{game}</p>
+          </div>
+          <div className="flex items-center text-xs text-muted-foreground">
+            <Calendar className="h-3 w-3 mr-1" />
+            {acquired}
+          </div>
         </div>
-      </CardContent>
+      </CardHeader>
       <CardFooter className="p-4 pt-0">
-        <Button variant="outline" size="sm" className="w-full">
-          <Eye className="mr-2 h-4 w-4" />
-          View Details
-        </Button>
+        <Link href={`/inventory/${id}`} className="w-full">
+          <Button variant="outline" className="w-full">
+            <ExternalLink className="h-4 w-4 mr-2" />
+            View Details
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   )

@@ -1,133 +1,263 @@
-import type { Metadata } from "next"
-import { Card, CardContent, CardHeader, CardTitle, Grid, Section, Flex } from "@/components/layout-system"
-import { AchievementCard } from "@/components/achievement-card"
-import { PageHeader } from "@/components/page-header"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Trophy, Star, Zap, Target, Award } from "lucide-react"
-
-export const metadata: Metadata = {
-  title: "Achievements | GamerVault",
-  description: "View and manage your gaming achievements",
-}
+import { Search } from "lucide-react"
+import { MainLayout } from "@/components/main-layout"
+import { PageHeader } from "@/components/page-header"
+import { AchievementCard } from "@/components/achievement-card"
 
 export default function AchievementsPage() {
   return (
-    <>
-      <PageHeader title="Achievements" description="Track your gaming milestones" />
+    <MainLayout>
+      <PageHeader title="Achievements" description="Track your gaming accomplishments">
+        <div className="flex items-center gap-2">
+          <div className="relative">
+            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Input type="search" placeholder="Search achievements..." className="w-[200px] pl-8 md:w-[300px]" />
+          </div>
+        </div>
+      </PageHeader>
 
-      <Section>
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle>Achievement Progress</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Flex direction="col" gap="default">
-              <div>
-                <div className="mb-2 flex items-center justify-between">
-                  <span className="text-sm font-medium">Overall Completion</span>
-                  <span className="text-sm font-medium">65%</span>
+      <Card className="mb-6">
+        <CardHeader className="pb-3">
+          <CardTitle>Achievement Progress</CardTitle>
+          <CardDescription>Your overall achievement completion</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="h-3 w-3 rounded-full bg-primary" />
+                  <span>Epic Quest</span>
                 </div>
-                <Progress value={65} className="h-2" />
+                <span>42/50</span>
               </div>
-              <Grid cols={3} gap="default">
-                <Card>
-                  <CardContent className="p-4 text-center">
-                    <div className="mb-2 flex justify-center">
-                      <Trophy className="h-8 w-8 text-amber-500" />
-                    </div>
-                    <div className="text-2xl font-bold">128</div>
-                    <p className="text-xs text-muted-foreground">Total Achievements</p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardContent className="p-4 text-center">
-                    <div className="mb-2 flex justify-center">
-                      <Star className="h-8 w-8 text-purple-500" />
-                    </div>
-                    <div className="text-2xl font-bold">12</div>
-                    <p className="text-xs text-muted-foreground">Rare Achievements</p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardContent className="p-4 text-center">
-                    <div className="mb-2 flex justify-center">
-                      <Award className="h-8 w-8 text-blue-500" />
-                    </div>
-                    <div className="text-2xl font-bold">4,250</div>
-                    <p className="text-xs text-muted-foreground">Total Points</p>
-                  </CardContent>
-                </Card>
-              </Grid>
-            </Flex>
-          </CardContent>
-        </Card>
+              <Progress value={84} className="h-2" />
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="h-3 w-3 rounded-full bg-blue-500" />
+                  <span>Dragon Riders</span>
+                </div>
+                <span>35/60</span>
+              </div>
+              <Progress value={58} className="h-2" />
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="h-3 w-3 rounded-full bg-green-500" />
+                  <span>Wizard Wars</span>
+                </div>
+                <span>28/40</span>
+              </div>
+              <Progress value={70} className="h-2" />
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="h-3 w-3 rounded-full bg-yellow-500" />
+                  <span>Shadow Assassin</span>
+                </div>
+                <span>15/45</span>
+              </div>
+              <Progress value={33} className="h-2" />
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="h-3 w-3 rounded-full bg-red-500" />
+                  <span>Racing Legends</span>
+                </div>
+                <span>8/30</span>
+              </div>
+              <Progress value={27} className="h-2" />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
-        <Tabs defaultValue="all">
-          <TabsList className="mb-6">
-            <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="recent">Recent</TabsTrigger>
-            <TabsTrigger value="rare">Rare</TabsTrigger>
-            <TabsTrigger value="locked">Locked</TabsTrigger>
-          </TabsList>
+      <div className="flex flex-col md:flex-row gap-4 mb-6">
+        <Select defaultValue="all">
+          <SelectTrigger className="w-full md:w-[180px]">
+            <SelectValue placeholder="Game" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Games</SelectItem>
+            <SelectItem value="epic-quest">Epic Quest</SelectItem>
+            <SelectItem value="dragon-riders">Dragon Riders</SelectItem>
+            <SelectItem value="wizard-wars">Wizard Wars</SelectItem>
+            <SelectItem value="shadow-assassin">Shadow Assassin</SelectItem>
+            <SelectItem value="racing-legends">Racing Legends</SelectItem>
+          </SelectContent>
+        </Select>
 
-          <TabsContent value="all" className="mt-0">
-            <Grid cols={3} gap="default">
-              <AchievementCard
-                title="First Victory"
-                description="Win your first match"
-                icon={Trophy}
-                points={50}
-                unlocked={true}
-                date="2 days ago"
-              />
-              <AchievementCard
-                title="Power Player"
-                description="Play for 10 hours straight"
-                icon={Zap}
-                points={100}
-                unlocked={true}
-                date="1 week ago"
-              />
-              <AchievementCard
-                title="Sharpshooter"
-                description="Hit 10 consecutive targets"
-                icon={Target}
-                points={75}
-                unlocked={true}
-                date="2 weeks ago"
-              />
-              <AchievementCard
-                title="Collector"
-                description="Collect 50 unique items"
-                icon={Star}
-                points={150}
-                unlocked={false}
-                progress={32}
-                total={50}
-              />
-              <AchievementCard
-                title="Master Strategist"
-                description="Win 5 matches without losing a unit"
-                icon={Award}
-                points={200}
-                unlocked={false}
-                progress={3}
-                total={5}
-              />
-              <AchievementCard
-                title="Explorer"
-                description="Discover all map locations"
-                icon={Zap}
-                points={125}
-                unlocked={false}
-                progress={18}
-                total={25}
-              />
-            </Grid>
-          </TabsContent>
-        </Tabs>
-      </Section>
-    </>
+        <Select defaultValue="all">
+          <SelectTrigger className="w-full md:w-[180px]">
+            <SelectValue placeholder="Status" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Status</SelectItem>
+            <SelectItem value="unlocked">Unlocked</SelectItem>
+            <SelectItem value="locked">Locked</SelectItem>
+            <SelectItem value="in-progress">In Progress</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <Select defaultValue="all">
+          <SelectTrigger className="w-full md:w-[180px]">
+            <SelectValue placeholder="Difficulty" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Difficulties</SelectItem>
+            <SelectItem value="easy">Easy</SelectItem>
+            <SelectItem value="medium">Medium</SelectItem>
+            <SelectItem value="hard">Hard</SelectItem>
+            <SelectItem value="extreme">Extreme</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <Tabs defaultValue="all">
+        <TabsList className="mb-6">
+          <TabsTrigger value="all">All Achievements</TabsTrigger>
+          <TabsTrigger value="recent">Recently Unlocked</TabsTrigger>
+          <TabsTrigger value="rare">Rare Achievements</TabsTrigger>
+          <TabsTrigger value="progress">In Progress</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="all">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <AchievementCard
+              id="ach-1"
+              name="First Victory"
+              image="/placeholder.svg?height=100&width=100&text=Trophy"
+              game="Epic Quest"
+              points={10}
+              unlocked="2023-04-10"
+              description="Win your first battle against an enemy."
+              status="unlocked"
+            />
+            <AchievementCard
+              id="ach-2"
+              name="Dragon Slayer"
+              image="/placeholder.svg?height=100&width=100&text=Dragon"
+              game="Epic Quest"
+              points={50}
+              unlocked="2023-05-20"
+              description="Defeat the mighty dragon in the Mountain of Doom."
+              status="unlocked"
+            />
+            <AchievementCard
+              id="ach-3"
+              name="Master Wizard"
+              image="/placeholder.svg?height=100&width=100&text=Wizard"
+              game="Wizard Wars"
+              points={100}
+              unlocked="2023-06-15"
+              description="Cast 1000 spells successfully."
+              status="unlocked"
+            />
+            <AchievementCard
+              id="ach-4"
+              name="Speed Demon"
+              image="/placeholder.svg?height=100&width=100&text=Speed"
+              game="Racing Legends"
+              points={25}
+              unlocked="2023-07-22"
+              description="Complete a race in under 2 minutes."
+              status="unlocked"
+            />
+            <AchievementCard
+              id="ach-5"
+              name="Treasure Hunter"
+              image="/placeholder.svg?height=100&width=100&text=Treasure"
+              game="Epic Quest"
+              points={30}
+              progress={65}
+              description="Find 100 hidden treasures throughout the world."
+              status="in-progress"
+            />
+            <AchievementCard
+              id="ach-6"
+              name="Legendary Rider"
+              image="/placeholder.svg?height=100&width=100&text=Dragon"
+              game="Dragon Riders"
+              points={75}
+              description="Tame and ride all 5 legendary dragons."
+              status="locked"
+            />
+          </div>
+        </TabsContent>
+
+        <TabsContent value="recent">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <AchievementCard
+              id="ach-4"
+              name="Speed Demon"
+              image="/placeholder.svg?height=100&width=100&text=Speed"
+              game="Racing Legends"
+              points={25}
+              unlocked="2023-07-22"
+              description="Complete a race in under 2 minutes."
+              status="unlocked"
+            />
+            <AchievementCard
+              id="ach-3"
+              name="Master Wizard"
+              image="/placeholder.svg?height=100&width=100&text=Wizard"
+              game="Wizard Wars"
+              points={100}
+              unlocked="2023-06-15"
+              description="Cast 1000 spells successfully."
+              status="unlocked"
+            />
+          </div>
+        </TabsContent>
+
+        <TabsContent value="rare">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <AchievementCard
+              id="ach-3"
+              name="Master Wizard"
+              image="/placeholder.svg?height=100&width=100&text=Wizard"
+              game="Wizard Wars"
+              points={100}
+              unlocked="2023-06-15"
+              description="Cast 1000 spells successfully."
+              status="unlocked"
+            />
+            <AchievementCard
+              id="ach-6"
+              name="Legendary Rider"
+              image="/placeholder.svg?height=100&width=100&text=Dragon"
+              game="Dragon Riders"
+              points={75}
+              description="Tame and ride all 5 legendary dragons."
+              status="locked"
+            />
+          </div>
+        </TabsContent>
+
+        <TabsContent value="progress">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <AchievementCard
+              id="ach-5"
+              name="Treasure Hunter"
+              image="/placeholder.svg?height=100&width=100&text=Treasure"
+              game="Epic Quest"
+              points={30}
+              progress={65}
+              description="Find 100 hidden treasures throughout the world."
+              status="in-progress"
+            />
+          </div>
+        </TabsContent>
+      </Tabs>
+    </MainLayout>
   )
 }

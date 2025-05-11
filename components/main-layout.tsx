@@ -1,11 +1,13 @@
 "use client"
 
 import type React from "react"
-
 import { useEffect, useState } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import { MainSidebar } from "@/components/main-sidebar"
 import { SidebarInset } from "@/components/ui/sidebar"
+import { Loader2 } from "lucide-react"
+
+const PUBLIC_PATHS = ["/", "/auth/login", "/auth/register", "/marketplace", "/achievements", "/leaderboard"]
 
 export function MainLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
@@ -14,22 +16,25 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Check if user is logged in
-    const loggedIn = localStorage.getItem("isLoggedIn") === "true"
-    setIsLoggedIn(loggedIn)
-    setIsLoading(false)
-
-    // If not logged in and trying to access protected routes, redirect to login
-    if (
-      !loggedIn &&
-      !pathname.startsWith("/auth/") &&
-      pathname !== "/" &&
-      !pathname.startsWith("/marketplace") &&
-      !pathname.startsWith("/achievements") &&
-      !pathname.startsWith("/leaderboard")
-    ) {
-      router.push("/auth/login")
+    const checkAuth = async () => {
+      try {
+        // Check if user is logged in
+        const loggedIn = localStorage.getItem("isLoggedIn") === "true"
+        setIsLoggedIn(loggedIn)
+        
+        // If not logged in and trying to access protected routes, redirect to login
+        if (!loggedIn && !PUBLIC_PATHS.some(path => pathname.startsWith(path))) {
+          router.push("/auth/login")
+        }
+      } catch (error) {
+        console.error("Auth check failed:", error)
+        router.push("/auth/login")
+      } finally {
+        setIsLoading(false)
+      }
     }
+
+    checkAuth()
   }, [pathname, router])
 
   // Don't render sidebar for landing page and auth pages
@@ -39,7 +44,11 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
 
   // Show loading state
   if (isLoading) {
-    return <div className="flex h-screen items-center justify-center">Loading...</div>
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    )
   }
 
   // If not logged in, don't render the sidebar
@@ -51,8 +60,8 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen">
       <MainSidebar />
-      <SidebarInset className="w-full">
-        <main className="container mx-auto p-6">{children}</main>
+      <SidebarInset>
+        <main className="flex-1 p-6">{children}</main>
       </SidebarInset>
     </div>
   )
