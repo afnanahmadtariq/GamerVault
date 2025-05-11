@@ -9,8 +9,7 @@ const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "GamerVault - Gaming NFT & Achievement Showcase",
-  description: "Showcase your gaming achievements and NFT collection",
-    generator: 'v0.dev'
+  description: "Showcase your gaming achievements and NFT collection"
 }
 
 export default function RootLayout({
