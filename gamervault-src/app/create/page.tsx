@@ -78,17 +78,35 @@ export default function CreatePage() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simulate submission delay
-    setTimeout(() => {
+    try {
+      // Validate form data
+      const sanitizedData = {
+        ...formData,
+        name: formData.name.trim(),
+        description: formData.description.trim(),
+      }
+
+      // Check for emojis or special characters
+      const hasEmoji = /[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/u.test(sanitizedData.name + sanitizedData.description)
+      if (hasEmoji) {
+        throw new Error("Emojis and special characters are not allowed in the name or description")
+      }
+
       // In a real app, this would submit to a server
+      // For now, we'll just simulate the submission
+      await new Promise(resolve => setTimeout(resolve, 1500))
+      
       alert("Your NFT has been submitted for review!")
-      setIsSubmitting(false)
       router.push("/dashboard")
-    }, 1500)
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "An error occurred while submitting the form")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (isLoading) {
