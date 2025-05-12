@@ -14,7 +14,7 @@ RUN npm install --legacy-peer-deps
 COPY gamervault-src/ .
 
 # Build the Next.js app
-RUN next build
+RUN npm run build
 
 # Expose the app port
 EXPOSE 3000

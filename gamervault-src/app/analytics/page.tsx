@@ -48,7 +48,6 @@ export default function AnalyticsPage() {
       </div>
     )
   }
-
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -534,5 +533,130 @@ export default function AnalyticsPage() {
                             <span className="text-sm font-medium">Shares</span>
                           </div>
                           <span className="text-sm">32</span>
+                        </div>
+                        <Progress value={40} className="h-2" />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Users className="h-5 w-5 text-primary" />
+                      Social Network Growth
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <div className="h-3 w-3 rounded-full bg-primary" />
+                            <span className="text-sm font-medium">Followers</span>
+                          </div>
+                          <span className="text-sm">156 followers</span>
+                        </div>
+                        <Progress value={65} className="h-2" />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <div className="h-3 w-3 rounded-full bg-blue-500" />
+                            <span className="text-sm font-medium">Following</span>
+                          </div>
+                          <span className="text-sm">98 following</span>
+                        </div>
+                        <Progress value={45} className="h-2" />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="earnings" className="mt-6 space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <BarChart3 className="h-5 w-5 text-primary" />
+                      Earnings by Source
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <div className="h-3 w-3 rounded-full bg-primary" />
+                            <span className="text-sm font-medium">NFT Sales</span>
+                          </div>
+                          <span className="text-sm">$12,500 (45%)</span>
+                        </div>
+                        <Progress value={45} className="h-2" />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <div className="h-3 w-3 rounded-full bg-blue-500" />
+                            <span className="text-sm font-medium">Achievement Rewards</span>
+                          </div>
+                          <span className="text-sm">$8,200 (30%)</span>
+                        </div>
+                        <Progress value={30} className="h-2" />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <div className="h-3 w-3 rounded-full bg-green-500" />
+                            <span className="text-sm font-medium">Trading Fees</span>
+                          </div>
+                          <span className="text-sm">$4,800 (17%)</span>
+                        </div>
+                        <Progress value={17} className="h-2" />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <div className="h-3 w-3 rounded-full bg-yellow-500" />
+                            <span className="text-sm font-medium">Other</span>
+                          </div>
+                          <span className="text-sm">$2,000 (8%)</span>
+                        </div>
+                        <Progress value={8} className="h-2" />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                <Card className="lg:col-span-2">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <LineChart className="h-5 w-5 text-primary" />
+                      Earnings Over Time
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <div className="h-[300px] flex items-center justify-center">
+                      <div className="text-center text-muted-foreground">
+                        <LineChart className="h-16 w-16 mx-auto mb-4 opacity-50" />
+                        <p>Chart visualization would appear here</p>
+                        <p className="text-sm">Showing earnings trends over the selected time period</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </main>
+    </div>
+  )
+}
 
-\
