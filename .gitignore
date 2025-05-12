@@ -1,29 +1,29 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+gamervault-src/node_modules
 
 # next.js
-/.next/
-/out/
+gamervault-src/.next/
+gamervault-src/out/
 
 # production
-/build
+gamervault-src/build
 
 # debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
+gamervault-src/npm-debug.log*
+gamervault-src/yarn-debug.log*
+gamervault-src/yarn-error.log*
+gamervault-src/.pnpm-debug.log*
 
 # env files
-.env*
+gamervault-src/.env*
 
 # vercel
-.vercel
+gamervault-src/.vercel
 
 # typescript
-*.tsbuildinfo
-next-env.d.ts
+gamervault-src/*.tsbuildinfo
+gamervault-src/next-env.d.ts
 
 *.txt
