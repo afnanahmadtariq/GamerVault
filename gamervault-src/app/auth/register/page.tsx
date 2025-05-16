@@ -10,9 +10,12 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { GamepadIcon as GameController, Loader2 } from "lucide-react"
+import { useAuth } from "@/hooks/use-auth"
+import { toast } from "sonner"
 
 export default function RegisterPage() {
   const router = useRouter()
+  const { register } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     username: "",
@@ -30,29 +33,28 @@ export default function RegisterPage() {
     e.preventDefault()
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match")
+      toast.error("Passwords do not match")
       return
     }
 
     setIsLoading(true)
 
-    // Simulate registration delay
-    setTimeout(() => {
-      // In a real app, this would be an actual registration call
-      localStorage.setItem("isLoggedIn", "true")
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          id: "user-1",
-          name: formData.username,
-          email: formData.email,
-          avatar: "/placeholder.svg?height=40&width=40&text=P1",
-        }),
-      )
+    try {
+      const result = await register(formData.username, formData.email, formData.password)
 
-      setIsLoading(false)
+      if (!result.success) {
+        toast.error(result.error || "Failed to register")
+        setIsLoading(false)
+        return
+      }
+
+      toast.success("Registration successful!")
       router.push("/dashboard")
-    }, 1500)
+    } catch (error) {
+      console.error("Registration error:", error)
+      toast.error("An unexpected error occurred")
+      setIsLoading(false)
+    }
   }
 
   return (

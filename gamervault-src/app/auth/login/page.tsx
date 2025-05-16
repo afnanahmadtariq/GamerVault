@@ -10,9 +10,12 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { GamepadIcon as GameController, Loader2 } from "lucide-react"
+import { useAuth } from "@/hooks/use-auth"
+import { toast } from "sonner"
 
 export default function LoginPage() {
   const router = useRouter()
+  const { login } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     email: "",
@@ -28,23 +31,22 @@ export default function LoginPage() {
     e.preventDefault()
     setIsLoading(true)
 
-    // Simulate authentication delay
-    setTimeout(() => {
-      // In a real app, this would be an actual authentication call
-      localStorage.setItem("isLoggedIn", "true")
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          id: "user-1",
-          name: "Player One",
-          email: formData.email,
-          avatar: "/placeholder.svg?height=40&width=40&text=P1",
-        }),
-      )
-
-      setIsLoading(false)
+    try {
+      const result = await login(formData.email, formData.password)
+      
+      if (!result.success) {
+        toast.error(result.error || "Failed to login")
+        setIsLoading(false)
+        return
+      }
+      
+      toast.success("Login successful!")
       router.push("/dashboard")
-    }, 1500)
+    } catch (error) {
+      console.error("Login error:", error)
+      toast.error("An unexpected error occurred")
+      setIsLoading(false)
+    }
   }
 
   return (

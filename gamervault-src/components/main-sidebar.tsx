@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -15,17 +15,31 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { Award, BarChart3, Bell, GamepadIcon, LogOut, Settings, ShoppingBag, Trophy, Users, Wallet } from "lucide-react"
+import { useAuth } from "@/hooks/use-auth"
+import { toast } from "sonner"
 
 export function MainSidebar() {
   const pathname = usePathname()
+  const router = useRouter()
+  const { user, logout } = useAuth()
 
-  // Mock user data - in a real app, this would come from authentication
-  const user = {
-    name: "Player One",
-    email: "player@example.com",
-    avatar: "/placeholder.svg?height=40&width=40&text=P1",
+  // Default user data with actual auth data
+  const userData = {
+    name: user?.name || "Player One",
+    email: user?.email || "player@example.com",
+    avatar: user?.image || "/placeholder.svg?height=40&width=40&text=P1",
     level: 42,
     notifications: 3,
+  }
+
+  const handleLogout = async () => {
+    try {
+      await logout()
+      toast.success("Logged out successfully")
+    } catch (error) {
+      toast.error("Failed to logout")
+      console.error("Logout error:", error)
+    }
   }
 
   return (
@@ -40,14 +54,14 @@ export function MainSidebar() {
         <div className="px-4 py-2">
           <div className="flex items-center gap-3 mb-6 mt-2">
             <Avatar>
-              <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
-              <AvatarFallback>P1</AvatarFallback>
+              <AvatarImage src={userData.avatar || "/placeholder.svg"} alt={userData.name} />
+              <AvatarFallback>{userData.name?.charAt(0)}</AvatarFallback>
             </Avatar>
             <div>
-              <div className="font-medium">{user.name}</div>
+              <div className="font-medium">{userData.name}</div>
               <div className="flex items-center gap-2">
                 <Badge variant="secondary" className="text-xs">
-                  Level {user.level}
+                  Level {userData.level}
                 </Badge>
                 <Badge variant="outline" className="text-xs">
                   Pro Gamer
@@ -112,16 +126,16 @@ export function MainSidebar() {
         <div className="flex items-center justify-between p-4">
           <Button variant="outline" size="icon" className="relative">
             <Bell className="h-5 w-5" />
-            {user.notifications > 0 && (
+            {userData.notifications > 0 && (
               <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-primary text-[10px] font-medium text-primary-foreground flex items-center justify-center">
-                {user.notifications}
+                {userData.notifications}
               </span>
             )}
           </Button>
           <Button variant="outline" size="icon">
             <Award className="h-5 w-5" />
           </Button>
-          <Button variant="outline" size="icon">
+          <Button variant="outline" size="icon" onClick={handleLogout}>
             <LogOut className="h-5 w-5" />
           </Button>
         </div>
