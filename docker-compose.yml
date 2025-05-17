@@ -2,14 +2,18 @@ version: '3.8'
 
 services:
   web:
-    build: .
+    build: 
+      context: ./gamervault-src2
+      args:
+        MONGODB_URI: mongodb://mongo:28017/nextjsdb
+        JWT_SECRET: 3f66f61e8210bfd24cb74353c2228408e5d3d996a0de3f6e02604675608ddc9
     container_name: gamervault-part2
     ports:
       - '3100:3000'
     depends_on:
       - mongo
     environment:
-      - MONGODB_URI=mongodb://mongo:27017/nextjsdb
+      - MONGODB_URI=mongodb://mongo:28017/nextjsdb
       - JWT_SECRET=3f66f61e8210bfd24cb74353c2228408e5d3d996a0de3f6e02604675608ddc9
     volumes:
       - ./gamervault-src2:/gamervault-src

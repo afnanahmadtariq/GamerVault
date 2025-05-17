@@ -18,11 +18,10 @@ interface NFTCardProps {
 
 export function NFTCard({ id, name, image, game, rarity, acquired }: NFTCardProps) {
   return (
-    <Card className="overflow-hidden">
-      <div className="aspect-square relative">
+    <Card className="overflow-hidden">      <div className="aspect-square relative">
         {image ? (
           <Image
-            src={image}
+            src={image || `https://source.unsplash.com/random/800x800?${encodeURIComponent(game)},nft,digital-art`}
             alt={name}
             fill
             className="object-cover transition-all hover:scale-105"

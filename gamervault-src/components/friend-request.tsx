@@ -13,9 +13,8 @@ interface FriendRequestProps {
 export function FriendRequest({ name, image, mutualFriends }: FriendRequestProps) {
   return (
     <div className="flex items-center justify-between w-full">
-      <div className="flex items-center gap-3">
-        <Avatar>
-          <AvatarImage src={image || "/placeholder-user.jpg"} alt={name} />
+      <div className="flex items-center gap-3">        <Avatar>
+          <AvatarImage src={image || `https://source.unsplash.com/random/100x100?profile,person,${Math.floor(Math.random() * 1000)}`} alt={name} />
           <AvatarFallback>{name.charAt(0)}</AvatarFallback>
         </Avatar>
         <div>

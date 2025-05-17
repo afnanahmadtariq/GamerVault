@@ -75,13 +75,12 @@ export default function DashboardPage() {
                 <CardTitle>Recent Achievements</CardTitle>
                 <CardDescription>Your latest gaming accomplishments</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <RecentAchievement
+              <CardContent className="space-y-4">                <RecentAchievement
                   name="Dragon Slayer"
                   game="Epic Quest"
                   description="Defeat the mighty dragon in the Mountain of Doom"
                   date="2 days ago"
-                  image="/placeholder.svg?height=40&width=40&text=🐉"
+                  image="https://source.unsplash.com/random/80x80?dragon,fantasy,epic"
                   points={50}
                 />
                 <RecentAchievement
@@ -89,7 +88,7 @@ export default function DashboardPage() {
                   game="Wizard Wars"
                   description="Cast 1000 spells successfully"
                   date="5 days ago"
-                  image="/placeholder.svg?height=40&width=40&text=🧙"
+                  image="https://source.unsplash.com/random/80x80?wizard,magic,fantasy"
                   points={100}
                 />
                 <RecentAchievement
@@ -97,7 +96,7 @@ export default function DashboardPage() {
                   game="Racing Legends"
                   description="Complete a race in under 2 minutes"
                   date="1 week ago"
-                  image="/placeholder.svg?height=40&width=40&text=🏎️"
+                  image="https://source.unsplash.com/random/80x80?racing,car,speed"
                   points={25}
                 />
               </CardContent>
@@ -150,11 +149,10 @@ export default function DashboardPage() {
               <CardDescription>Recently acquired digital assets</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <NFTCard
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">                <NFTCard
                   id="nft-1"
                   name="Legendary Sword"
-                  image="/placeholder.svg?height=200&width=200&text=Legendary+Sword"
+                  image="https://source.unsplash.com/random/800x800?sword,weapon,fantasy"
                   game="Epic Quest"
                   rarity="Legendary"
                   acquired="2023-05-15"
@@ -162,7 +160,7 @@ export default function DashboardPage() {
                 <NFTCard
                   id="nft-2"
                   name="Golden Shield"
-                  image="/placeholder.svg?height=200&width=200&text=Golden+Shield"
+                  image="https://source.unsplash.com/random/800x800?shield,gold,armor"
                   game="Epic Quest"
                   rarity="Epic"
                   acquired="2023-06-22"
@@ -170,7 +168,7 @@ export default function DashboardPage() {
                 <NFTCard
                   id="nft-3"
                   name="Mystic Staff"
-                  image="/placeholder.svg?height=200&width=200&text=Mystic+Staff"
+                  image="https://source.unsplash.com/random/800x800?staff,magic,wizard"
                   game="Wizard Wars"
                   rarity="Rare"
                   acquired="2023-07-10"
@@ -178,7 +176,7 @@ export default function DashboardPage() {
                 <NFTCard
                   id="nft-4"
                   name="Dragon Mount"
-                  image="/placeholder.svg?height=200&width=200&text=Dragon+Mount"
+                  image="https://source.unsplash.com/random/800x800?dragon,fantasy,creature"
                   game="Dragon Riders"
                   rarity="Legendary"
                   acquired="2023-08-05"
