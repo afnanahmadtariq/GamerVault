@@ -80,9 +80,8 @@ export function MarketplaceNFT({
             <div className="font-bold">{price} coins</div>
           </div>
         </div>
-      </CardHeader>
-      <CardContent className="p-4 pt-0">
-        <div className="text-xs text-muted-foreground">Seller: {seller}</div>
+      </CardHeader>      <CardContent className="p-4 pt-0">
+        <div className="text-xs text-muted-foreground">Seller: {seller.name}</div>
       </CardContent>
       <CardFooter className="p-4">
         <Link href={`/marketplace/${id}`} className="w-full">

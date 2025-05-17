@@ -1,12 +1,12 @@
-import * as React from 'react';
-
 "use client"
-import type React from "react"
+
+import * as React from 'react';
+import type { ReactNode } from "react"
 import { MainSidebar } from "@/components/main-sidebar"
 import { SidebarInset } from "@/components/ui/sidebar"
 import ProtectedRoute from "@/components/protected-route"
 
-export function MainLayout({ children }: { children: React.ReactNode }) {
+export function MainLayout({ children }: { children: ReactNode }) {
   return (
     <ProtectedRoute>
       <div className="flex min-h-screen">

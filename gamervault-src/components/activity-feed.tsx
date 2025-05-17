@@ -77,26 +77,15 @@ export function ActivityFeed() {
       </div>
     );
   }
-
   if (activities.length === 0) {
     return <div className="text-center p-6 text-muted-foreground">No recent activities</div>;
   }
-    },
-    {
-      id: 5,
-      type: "achievement",
-      title: "Master Wizard Achievement",
-      description: "You cast 1000 spells successfully in Wizard Wars",
-      time: "2 weeks ago",
-      icon: <Award className="h-5 w-5 text-primary" />,
-    },
-  ]
 
   return (
     <div className="space-y-6">
       {activities.map((activity) => (
         <div key={activity.id} className="flex items-start gap-4">
-          <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">{activity.icon}</div>
+          <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">{getActivityIcon(activity)}</div>
           <div className="space-y-1">
             <p className="text-sm font-medium">{activity.title}</p>
             <p className="text-xs text-muted-foreground">{activity.description}</p>
