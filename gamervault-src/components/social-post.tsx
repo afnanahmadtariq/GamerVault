@@ -10,11 +10,11 @@ import { Separator } from "@/components/ui/separator"
 interface SocialPostProps {
   author: {
     name: string
-    avatar: string
+    image: string // Changed from avatar to image for consistency
     verified?: boolean
   }
   content: string
-  image: string | null
+  postImage: string | null // Changed from image to postImage to avoid confusion with author.image
   timestamp: string
   likes: number
   comments: number
@@ -22,10 +22,9 @@ interface SocialPostProps {
   liked: boolean
 }
 
-export function SocialPost({
-  author,
+export function SocialPost({  author,
   content,
-  image,
+  postImage,
   timestamp,
   likes,
   comments,
@@ -47,10 +46,9 @@ export function SocialPost({
   return (
     <Card>
       <CardHeader className="p-4">
-        <div className="flex justify-between items-start">
-          <div className="flex items-start gap-3">
+        <div className="flex justify-between items-start">          <div className="flex items-start gap-3">
             <Avatar>
-              <AvatarImage src={author.avatar || "https://source.unsplash.com/random"} alt={author.name} />
+              <AvatarImage src={author.image || "/placeholder-user.jpg"} alt={author.name} />
               <AvatarFallback>{author.name.charAt(0)}</AvatarFallback>
             </Avatar>
             <div>
@@ -67,12 +65,11 @@ export function SocialPost({
           </Button>
         </div>
       </CardHeader>
-      <CardContent className="p-4 pt-0 space-y-4">
-        <p>{content}</p>
+      <CardContent className="p-4 pt-0 space-y-4">        <p>{content}</p>
 
-        {image && (
+        {postImage && (
           <div className="rounded-md overflow-hidden">
-            <img src={image || "https://source.unsplash.com/featured/?gaming,technology"} alt="Post content" className="w-full h-auto" />
+            <img src={postImage || "https://source.unsplash.com/featured/?gaming,technology"} alt="Post content" className="w-full h-auto" />
           </div>
         )}
       </CardContent>

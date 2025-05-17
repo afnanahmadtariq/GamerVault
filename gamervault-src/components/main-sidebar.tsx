@@ -22,20 +22,23 @@ export function MainSidebar() {
   const pathname = usePathname()
   const router = useRouter()
   const { user, logout } = useAuth()
-
   // Default user data with actual auth data
   const userData = {
     name: user?.name || "Player One",
     email: user?.email || "player@example.com",
-    avatar: user?.image || "https://source.unsplash.com/40x40/?abstract",
+    image: user?.image || "/placeholder-user.jpg", // Use image instead of avatar for consistency
     level: 42,
     notifications: 3,
   }
-
   const handleLogout = async () => {
     try {
-      await logout()
-      toast.success("Logged out successfully")
+      const result = await logout()
+      if (result.success) {
+        toast.success("Logged out successfully")
+        router.push("/auth/login")
+      } else {
+        toast.error("Failed to logout")
+      }
     } catch (error) {
       toast.error("Failed to logout")
       console.error("Logout error:", error)
@@ -51,10 +54,9 @@ export function MainSidebar() {
         </div>
       </SidebarHeader>
       <SidebarContent>
-        <div className="px-4 py-2">
-          <div className="flex items-center gap-3 mb-6 mt-2">
+        <div className="px-4 py-2">          <div className="flex items-center gap-3 mb-6 mt-2">
             <Avatar>
-              <AvatarImage src={userData.avatar || "https://source.unsplash.com/random"} alt={userData.name} />
+              <AvatarImage src={userData.image || "/placeholder-user.jpg"} alt={userData.name} />
               <AvatarFallback>{userData.name?.charAt(0)}</AvatarFallback>
             </Avatar>
             <div>

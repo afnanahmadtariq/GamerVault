@@ -2,7 +2,14 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { jwtVerify } from "jose"; // Using jose for JWT verification
 
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
+// Ensure JWT_SECRET is properly defined
+const JWT_SECRET_RAW = process.env.JWT_SECRET || "";
+const JWT_SECRET = new TextEncoder().encode(JWT_SECRET_RAW);
+
+// Check in non-production environments
+if (!JWT_SECRET_RAW && process.env.NODE_ENV !== 'production') {
+  console.warn("JWT_SECRET environment variable is not defined in middleware");
+}
 
 export async function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;

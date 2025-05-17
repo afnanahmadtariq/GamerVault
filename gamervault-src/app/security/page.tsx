@@ -12,36 +12,31 @@ import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { AlertTriangle, GamepadIcon as GameController, Key, LogOut, QrCode, Shield, Smartphone } from "lucide-react"
 import { LanguageSelector } from "@/components/language-selector"
+import { useAuth } from "@/hooks/use-auth"
+import { toast } from "sonner"
 
 export default function SecurityPage() {
   const router = useRouter()
-  const [user, setUser] = useState<any>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const { user, isLoading, logout } = useAuth()
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(false)
   const [showQRCode, setShowQRCode] = useState(false)
   const [verificationCode, setVerificationCode] = useState("")
 
   useEffect(() => {
-    // Check if user is logged in
-    const isLoggedIn = localStorage.getItem("isLoggedIn")
-    if (!isLoggedIn) {
+    // If not authenticated, redirect to login
+    if (!isLoading && !user) {
       router.push("/auth/login?redirect=/security")
-      return
     }
+  }, [user, isLoading, router])
 
-    // Get user data
-    const userData = localStorage.getItem("user")
-    if (userData) {
-      setUser(JSON.parse(userData))
+  const handleLogout = async () => {
+    const result = await logout()
+    if (result.success) {
+      toast.success("Logged out successfully")
+      router.push("/")
+    } else {
+      toast.error("Failed to logout")
     }
-
-    setIsLoading(false)
-  }, [router])
-
-  const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn")
-    localStorage.removeItem("user")
-    router.push("/")
   }
 
   const handleEnableTwoFactor = () => {
@@ -111,7 +106,7 @@ export default function SecurityPage() {
                   <div className="text-xs text-muted-foreground">{user.email}</div>
                 </div>
                 <Avatar>
-                  <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
+                  <AvatarImage src={user.image || "/placeholder-user.jpg"} alt={user.name} />
                   <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <Button variant="ghost" size="icon" onClick={handleLogout}>

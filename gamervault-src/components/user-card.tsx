@@ -1,21 +1,21 @@
-wimport { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { GamepadIcon, Users } from "lucide-react"
 
 interface UserCardProps {
   name: string
-  avatar: string
+  image: string // Changed from avatar to image for consistency
   mutualFriends: number
   level: number
   game: string
 }
 
-export function UserCard({ name, avatar, mutualFriends, level, game }: UserCardProps) {
+export function UserCard({ name, image, mutualFriends, level, game }: UserCardProps) {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
         <Avatar>
-          <AvatarImage src={avatar || "https://source.unsplash.com/random"} alt={name} />
+          <AvatarImage src={image || "https://source.unsplash.com/random"} alt={name} />
           <AvatarFallback>{name.charAt(0)}</AvatarFallback>
         </Avatar>
         <div>

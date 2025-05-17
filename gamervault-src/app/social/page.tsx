@@ -49,11 +49,11 @@ export default function SocialPage() {
               <SocialPost
                 author={{
                   name: "GameMaster",
-                  avatar: "/placeholder.svg?height=40&width=40&text=GM",
+                  image: "/placeholder-user.jpg",
                   verified: true,
                 }}
                 content="Just reached level 100 in Epic Quest! Check out my new legendary sword NFT!"
-                image="/placeholder.svg?height=400&width=600&text=Legendary+Sword"
+                postImage="/placeholder.svg?height=400&width=600&text=Legendary+Sword"
                 timestamp="2 hours ago"
                 likes={42}
                 comments={8}
@@ -63,11 +63,11 @@ export default function SocialPage() {
               <SocialPost
                 author={{
                   name: "DragonLord",
-                  avatar: "/placeholder.svg?height=40&width=40&text=DL",
+                  image: "/placeholder-user.jpg",
                   verified: true,
                 }}
                 content="Created a new custom skin for my dragon mount. What do you think?"
-                image="/placeholder.svg?height=400&width=600&text=Custom+Dragon+Skin"
+                postImage="/placeholder.svg?height=400&width=600&text=Custom+Dragon+Skin"
                 timestamp="5 hours ago"
                 likes={78}
                 comments={15}
@@ -77,11 +77,11 @@ export default function SocialPage() {
               <SocialPost
                 author={{
                   name: "SpeedDemon",
-                  avatar: "/placeholder.svg?height=40&width=40&text=SD",
+                  image: "/placeholder-user.jpg",
                   verified: false,
                 }}
                 content="Just broke my personal record in Racing Legends! 1:42.56 on the Mountain Pass track."
-                image={null}
+                postImage={null}
                 timestamp="Yesterday"
                 likes={23}
                 comments={5}
@@ -95,11 +95,11 @@ export default function SocialPage() {
                 <SocialPost
                   author={{
                     name: "DragonLord",
-                    avatar: "/placeholder.svg?height=40&width=40&text=DL",
+                    image: "/placeholder-user.jpg",
                     verified: true,
                   }}
                   content="Created a new custom skin for my dragon mount. What do you think?"
-                  image="/placeholder.svg?height=400&width=600&text=Custom+Dragon+Skin"
+                  postImage="/placeholder.svg?height=400&width=600&text=Custom+Dragon+Skin"
                   timestamp="5 hours ago"
                   likes={78}
                   comments={15}
@@ -114,11 +114,11 @@ export default function SocialPage() {
                 <SocialPost
                   author={{
                     name: "GameMaster",
-                    avatar: "/placeholder.svg?height=40&width=40&text=GM",
+                    image: "/placeholder-user.jpg",
                     verified: true,
                   }}
                   content="Just reached level 100 in Epic Quest! Check out my new legendary sword NFT!"
-                  image="/placeholder.svg?height=400&width=600&text=Legendary+Sword"
+                  postImage="/placeholder.svg?height=400&width=600&text=Legendary+Sword"
                   timestamp="2 hours ago"
                   likes={42}
                   comments={8}
@@ -139,12 +139,12 @@ export default function SocialPage() {
             <CardContent className="space-y-4">
               <FriendRequest
                 name="DragonSlayer"
-                avatar="/placeholder.svg?height=40&width=40&text=DS"
+                image="/placeholder-user.jpg"
                 mutualFriends={3}
               />
               <FriendRequest
                 name="MagicWizard"
-                avatar="/placeholder.svg?height=40&width=40&text=MW"
+                image="/placeholder-user.jpg"
                 mutualFriends={1}
               />
             </CardContent>
@@ -169,21 +169,21 @@ export default function SocialPage() {
               <div className="space-y-4 mt-4">
                 <UserCard
                   name="ArcaneMage"
-                  avatar="/placeholder.svg?height=40&width=40&text=AM"
+                  image="/placeholder-user.jpg"
                   mutualFriends={5}
                   level={42}
                   game="Wizard Wars"
                 />
                 <UserCard
                   name="ShadowNinja"
-                  avatar="/placeholder.svg?height=40&width=40&text=SN"
+                  image="/placeholder-user.jpg"
                   mutualFriends={2}
                   level={38}
                   game="Shadow Assassin"
                 />
                 <UserCard
                   name="EpicWarrior"
-                  avatar="/placeholder.svg?height=40&width=40&text=EW"
+                  image="/placeholder-user.jpg"
                   mutualFriends={7}
                   level={56}
                   game="Epic Quest"

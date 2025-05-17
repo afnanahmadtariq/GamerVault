@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -17,12 +17,22 @@ export default function RegisterPage() {
   const router = useRouter()
   const { register } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
+  const [redirectPath, setRedirectPath] = useState<string>("/dashboard")
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
   })
+  
+  // Get redirect path from URL if available
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirect = urlParams.get('redirect');
+    if (redirect) {
+      setRedirectPath(redirect);
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -46,10 +56,8 @@ export default function RegisterPage() {
         toast.error(result.error || "Failed to register")
         setIsLoading(false)
         return
-      }
-
-      toast.success("Registration successful!")
-      router.push("/dashboard")
+      }      toast.success("Registration successful!")
+      router.push(redirectPath)
     } catch (error) {
       console.error("Registration error:", error)
       toast.error("An unexpected error occurred")

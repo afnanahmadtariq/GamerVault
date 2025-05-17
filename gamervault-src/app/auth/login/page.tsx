@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -17,10 +17,20 @@ export default function LoginPage() {
   const router = useRouter()
   const { login } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
+  const [redirectPath, setRedirectPath] = useState<string>("/dashboard")
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   })
+  
+  // Get redirect path from URL if available
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirect = urlParams.get('redirect');
+    if (redirect) {
+      setRedirectPath(redirect);
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -38,10 +48,9 @@ export default function LoginPage() {
         toast.error(result.error || "Failed to login")
         setIsLoading(false)
         return
-      }
-      
+      }      
       toast.success("Login successful!")
-      router.push("/dashboard")
+      router.push(redirectPath)
     } catch (error) {
       console.error("Login error:", error)
       toast.error("An unexpected error occurred")

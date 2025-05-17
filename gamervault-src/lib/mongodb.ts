@@ -51,4 +51,7 @@ export async function connectToDatabase() {
   return cached.conn;
 }
 
+// Provide dbConnect as an alias for connectToDatabase for consistency
+export const dbConnect = connectToDatabase;
+
 export default connectToDatabase;

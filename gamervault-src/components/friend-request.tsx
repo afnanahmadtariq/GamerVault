@@ -4,16 +4,16 @@ import { Users } from "lucide-react"
 
 interface FriendRequestProps {
   name: string
-  avatar: string
+  image: string // Changed from avatar to image for consistency
   mutualFriends: number
 }
 
-export function FriendRequest({ name, avatar, mutualFriends }: FriendRequestProps) {
+export function FriendRequest({ name, image, mutualFriends }: FriendRequestProps) {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
         <Avatar>
-          <AvatarImage src={avatar || "https://source.unsplash.com/random"} alt={name} />
+          <AvatarImage src={image || "/placeholder-user.jpg"} alt={name} />
           <AvatarFallback>{name.charAt(0)}</AvatarFallback>
         </Avatar>
         <div>

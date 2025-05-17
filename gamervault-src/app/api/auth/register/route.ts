@@ -1,10 +1,13 @@
 import { NextResponse } from 'next/server';
-import { connectToDatabase } from '@/lib/mongodb';
+import dbConnect from '@/lib/mongodb';
 import User from '@/models/User';
 
 export async function POST(request: Request) {
   try {
-    const { name, email, password } = await request.json();
+    const body = await request.json();
+    const { name, email, password } = body;
+    
+    console.log('Register request:', { name, email, passwordLength: password?.length });
 
     // Validate input
     if (!name || !email || !password) {
@@ -27,7 +30,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-
+    
     if (!/^\S+@\S+\.\S+$/.test(email)) {
       return NextResponse.json(
         { error: 'Please provide a valid email address' },
@@ -36,44 +39,61 @@ export async function POST(request: Request) {
     }
 
     // Connect to database
-    await connectToDatabase();
-
-    // Check if user already exists
-    const existingUser = await User.findOne({ email });
-
-    if (existingUser) {
+    try {
+      await dbConnect();
+      console.log("Connected to MongoDB successfully");
+    } catch (dbError) {
+      console.error("MongoDB connection error:", dbError);
       return NextResponse.json(
-        { error: 'User with this email already exists' },
-        { status: 400 }
+        { error: 'Database connection error. Please try again later.' },
+        { status: 500 }
       );
     }
 
-    // Create new user
-    const user = new User({
-      name,
-      email,
-      password,
-      image: '/placeholder-user.jpg', // Add default placeholder image
-    });
+    // Check if user already exists
+    try {
+      const existingUser = await User.findOne({ email });
 
-    await user.save();
+      if (existingUser) {
+        console.log("Registration attempt with existing email:", email);
+        return NextResponse.json(
+          { error: 'User with this email already exists' },
+          { status: 400 }
+        );
+      }
 
-    // Remove password from response
-    const userResponse = {
-      id: user.id.toString(),
-      name: user.name,
-      email: user.email,
-      image: user.image,
-    };
+      // Create new user
+      const user = new User({
+        name,
+        email,
+        password,
+        image: '/placeholder-user.jpg', // Add default placeholder image
+      });      await user.save();
+      console.log("User created successfully:", { id: user.id, name: user.name, email: user.email });// Remove password from response
+      const userResponse = {
+        id: user.id.toString(), // Use .id instead of ._id for proper typing
+        name: user.name,
+        email: user.email,
+        image: user.image,
+      };
 
-    return NextResponse.json(
-      { message: 'User registered successfully', user: userResponse },
-      { status: 201 }
-    );
+      return NextResponse.json(
+        { message: 'User registered successfully', user: userResponse },
+        { status: 201 }
+      );
+    } catch (mongoError) {
+      console.error('MongoDB operation error:', mongoError);
+      return NextResponse.json(
+        { error: 'Error creating user account. Please try again later.' },
+        { status: 500 }
+      );
+    }
   } catch (error) {
     console.error('Registration error:', error);
+    // Return more detailed error for debugging
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      { error: 'Error registering user. Please try again later.' },
+      { error: `Error registering user: ${errorMessage}` },
       { status: 500 }
     );
   }
