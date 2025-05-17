@@ -12,10 +12,11 @@ interface MarketplaceNFTProps {
   id: string;
   name: string;
   image: string;
-  game: string;
+  game?: string;
+  category?: string;
   rarity: string;
   price: number;
-  seller: {
+  seller?: {
     id: string;
     name: string;
     image?: string;
@@ -28,6 +29,7 @@ export function MarketplaceNFT({
   name, 
   image, 
   game, 
+  category,
   rarity, 
   price, 
   seller,
@@ -81,7 +83,9 @@ export function MarketplaceNFT({
           </div>
         </div>
       </CardHeader>      <CardContent className="p-4 pt-0">
-        <div className="text-xs text-muted-foreground">Seller: {seller.name}</div>
+        <div className="text-xs text-muted-foreground">
+          {seller ? `Seller: ${seller.name}` : (category ? `Category: ${category}` : game ? `Game: ${game}` : '')}
+        </div>
       </CardContent>
       <CardFooter className="p-4">
         <Link href={`/marketplace/${id}`} className="w-full">

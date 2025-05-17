@@ -38,11 +38,7 @@
     ".next/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
-  ],
-  "watchOptions": {
-    "watchFile": "useFsEvents",
-    "watchDirectory": "useFsEvents",
-    "fallbackPolling": "dynamicPriority"
-  }
+    "node_modules",
+    ".next"
+  ]
 }
