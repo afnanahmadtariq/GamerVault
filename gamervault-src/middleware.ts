@@ -1,70 +1,151 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { jwtVerify } from "jose"; // Using jose for JWT verification
+import { jwtVerify, JWTPayload } from "jose";
 
 // Ensure JWT_SECRET is properly defined
 const JWT_SECRET_RAW = process.env.JWT_SECRET || "";
+
+// Only create the text encoder instance once, outside the middleware function for better performance
 const JWT_SECRET = new TextEncoder().encode(JWT_SECRET_RAW);
 
 // Check in non-production environments
-if (!JWT_SECRET_RAW && process.env.NODE_ENV !== 'production') {
+if (!JWT_SECRET_RAW) {
   console.warn("JWT_SECRET environment variable is not defined in middleware");
 }
 
-export async function middleware(req: NextRequest) {
-  const token = req.cookies.get("token")?.value;
+// Define protected routes only once, outside the middleware function
+const PROTECTED_ROUTES = [
+  "/dashboard",
+  "/inventory",
+  "/achievements",
+  "/leaderboard",
+  "/marketplace",
+  "/nft",
+  "/security",
+  "/settings",
+  "/social",
+  "/wallet",
+  "/create",
+  "/analytics",
+];
 
-  if (!token) {
-    if (isProtectedRoute(req.nextUrl.pathname)) {
-      return NextResponse.redirect(new URL("/auth/login", req.url));
-    }
-    return NextResponse.next();
-  }
+// Define public assets that should never be checked in a separate array
+const PUBLIC_ASSETS = [
+  "/api",
+  "/_next/static",
+  "/_next/image",
+  "/favicon.ico",
+  "/logo",
+  "/images",
+  "/fonts",
+  "/robots.txt",
+  "/manifest.json",
+];
 
+// Cache for token verification to reduce overhead on multiple requests
+// This is a simple in-memory cache, for production consider using a more robust solution
+const tokenCache = new Map<string, { userId: string; expires: number }>();
+
+/**
+ * Checks if the provided pathname is a protected route requiring authentication
+ */
+function isProtectedRoute(pathname: string): boolean {
+  return PROTECTED_ROUTES.some((route) => pathname.startsWith(route));
+}
+
+/**
+ * Checks if the provided pathname is a public asset that should bypass checks
+ */
+function isPublicAsset(pathname: string): boolean {
+  return PUBLIC_ASSETS.some((asset) => pathname.startsWith(asset));
+}
+
+/**
+ * Verifies a JWT token and returns the payload if valid, null otherwise
+ */
+async function verifyToken(token: string): Promise<JWTPayload | null> {
   try {
-    await jwtVerify(token, JWT_SECRET);
-    return NextResponse.next();
-  } catch (err) {
-    if (isProtectedRoute(req.nextUrl.pathname)) {
-      const response = NextResponse.redirect(new URL("/auth/login", req.url));
-      response.cookies.delete("token"); // Clear invalid token
-      return response;
+    // Check if token is in cache first
+    const cached = tokenCache.get(token);
+    if (cached && cached.expires > Date.now()) {
+      return { userId: cached.userId };
     }
-    const response = NextResponse.next();
-    response.cookies.delete("token"); // Clear invalid token
-    return response;
+
+    const { payload } = await jwtVerify(token, JWT_SECRET);
+
+    // Add to cache with expiration (5 minutes)
+    if (payload.userId) {
+      tokenCache.set(token, {
+        userId: payload.userId as string,
+        expires: Date.now() + 5 * 60 * 1000, // 5 minutes cache
+      });
+    }
+
+    return payload;
+  } catch (err) {
+    // Clean up cache entry if verification fails
+    tokenCache.delete(token);
+    return null;
   }
 }
 
-function isProtectedRoute(pathname: string) {
-  const protectedRoutes = [
-    "/dashboard",
-    "/inventory",
-    "/achievements",
-    "/leaderboard",
-    "/marketplace",
-    "/nft", // Assuming /nft/* should also be protected
-    "/security",
-    "/settings",
-    "/social",
-    "/wallet",
-    "/create",
-    "/analytics",
-  ];
-  return protectedRoutes.some((route) => pathname.startsWith(route));
+/**
+ * Middleware function to handle authentication and routing
+ */
+export async function middleware(req: NextRequest) {
+  const pathname = req.nextUrl.pathname;
+
+  // Skip checks for public assets
+  if (isPublicAsset(pathname)) {
+    return NextResponse.next();
+  }
+
+  // User is explicitly accessing login/register pages
+  if (pathname.startsWith("/auth/login") || pathname.startsWith("/auth/register")) {
+    // If user already has a valid token, redirect to dashboard
+    const token = req.cookies.get("token")?.value;
+    if (token) {
+      const payload = await verifyToken(token);
+      if (payload) {
+        return NextResponse.redirect(new URL("/dashboard", req.url));
+      }
+    }
+    return NextResponse.next();
+  }
+
+  const token = req.cookies.get("token")?.value;
+
+  // No token, check if route is protected
+  if (!token) {
+    if (isProtectedRoute(pathname)) {
+      const url = new URL("/auth/login", req.url);
+      url.searchParams.set("callbackUrl", encodeURI(req.url));
+      return NextResponse.redirect(url);
+    }
+    return NextResponse.next();
+  }
+
+  // Verify token
+  const payload = await verifyToken(token);
+
+  if (!payload) {
+    // Token is invalid - clear it
+    const response = isProtectedRoute(pathname)
+      ? NextResponse.redirect(new URL("/auth/login", req.url))
+      : NextResponse.next();
+
+    // Clear the invalid token
+    response.cookies.delete("token");
+    return response;
+  }
+
+  // Token is valid, proceeding
+  return NextResponse.next();
 }
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - auth/login
-     * - auth/register
-     */
-    "/((?!api|_next/static|_next/image|favicon.ico|auth/login|auth/register).*)",
+    // Match all paths except explicitly excluded ones
+    "/((?!_next/static|_next/image|favicon.ico).*)",
   ],
 };

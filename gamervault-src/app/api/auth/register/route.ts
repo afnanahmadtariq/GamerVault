@@ -1,65 +1,84 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import User from '@/models/User';
+import mongoose from 'mongoose';
 
-export async function POST(request: Request) {
+const IS_DEVELOPMENT = process.env.NODE_ENV === "development";
+
+// Helper for logging in development only
+const devLog = (message: string, ...args: any[]) => {
+  if (IS_DEVELOPMENT) {
+    console.log(message, ...args);
+  }
+};
+
+// Helper for consistent error responses
+const errorResponse = (message: string, status: number) => {
+  return NextResponse.json({ error: message }, { status });
+};
+
+export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    // Parse and validate request body
+    let body;
+    try {
+      body = await request.json();
+    } catch (e) {
+      return errorResponse("Invalid request body", 400);
+    }
+    
     const { name, email, password } = body;
     
-    console.log('Register request:', { name, email, passwordLength: password?.length });
+    devLog('Register request:', { name, email, passwordLength: password?.length });
 
-    // Validate input
+    // Validate required fields
     if (!name || !email || !password) {
-      return NextResponse.json(
-        { error: 'Name, email, and password are required' },
-        { status: 400 }
-      );
+      return errorResponse('Name, email, and password are required', 400);
     }
 
-    if (name.length < 3) {
-      return NextResponse.json(
-        { error: 'Name must be at least 3 characters long' },
-        { status: 400 }
-      );
+    // Validate name length
+    if (name.length < 3 || name.length > 50) {
+      return errorResponse('Name must be between 3 and 50 characters long', 400);
     }
 
-    if (password.length < 6) {
-      return NextResponse.json(
-        { error: 'Password must be at least 6 characters long' },
-        { status: 400 }
-      );
+    // Validate password strength
+    if (password.length < 8) {
+      return errorResponse('Password must be at least 8 characters long', 400);
+    }
+
+    // Check for password strength (at least one number and one letter)
+    if (!/(?=.*[A-Za-z])(?=.*\d)/.test(password)) {
+      return errorResponse('Password must contain at least one letter and one number', 400);
     }
     
+    // Validate email format
     if (!/^\S+@\S+\.\S+$/.test(email)) {
-      return NextResponse.json(
-        { error: 'Please provide a valid email address' },
-        { status: 400 }
-      );
+      return errorResponse('Please provide a valid email address', 400);
     }
 
     // Connect to database
     try {
       await dbConnect();
-      console.log("Connected to MongoDB successfully");
+      devLog("Connected to MongoDB successfully");
     } catch (dbError) {
       console.error("MongoDB connection error:", dbError);
-      return NextResponse.json(
-        { error: 'Database connection error. Please try again later.' },
-        { status: 500 }
-      );
+      return errorResponse('Database connection error. Please try again later.', 500);
     }
 
-    // Check if user already exists
+    // Start transaction to ensure data consistency
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
     try {
-      const existingUser = await User.findOne({ email });
+      // Check if user already exists
+      const existingUser = await User.findOne({ email }).session(session);
 
       if (existingUser) {
-        console.log("Registration attempt with existing email:", email);
-        return NextResponse.json(
-          { error: 'User with this email already exists' },
-          { status: 400 }
-        );
+        devLog("Registration attempt with existing email:", email);
+        await session.abortTransaction();
+        session.endSession();
+        // Use vague message to prevent user enumeration
+        return errorResponse('An account with this email already exists', 400);
       }
 
       // Create new user
@@ -68,10 +87,22 @@ export async function POST(request: Request) {
         email,
         password,
         image: '/placeholder-user.jpg', // Add default placeholder image
-      });      await user.save();
-      console.log("User created successfully:", { id: user.id, name: user.name, email: user.email });// Remove password from response
+      });
+      
+      await user.save({ session });
+      
+      // Create additional user-related records here if needed
+      // For example, automatically create an empty user profile
+      
+      // Commit the transaction
+      await session.commitTransaction();
+      session.endSession();
+      
+      devLog("User created successfully:", { id: user.id, name: user.name, email: user.email });
+      
+      // Remove sensitive data from response
       const userResponse = {
-        id: user.id.toString(), // Use .id instead of ._id for proper typing
+        id: user.id.toString(),
         name: user.name,
         email: user.email,
         image: user.image,
@@ -82,19 +113,23 @@ export async function POST(request: Request) {
         { status: 201 }
       );
     } catch (mongoError) {
+      // Rollback transaction on error
+      await session.abortTransaction();
+      session.endSession();
+      
       console.error('MongoDB operation error:', mongoError);
-      return NextResponse.json(
-        { error: 'Error creating user account. Please try again later.' },
-        { status: 500 }
-      );
+      
+      // Check for duplicate key error (another way to detect existing user)
+      if (mongoError instanceof mongoose.Error.ValidationError) {
+        return errorResponse('Validation error: Please check your input', 400);
+      } else if ((mongoError as any).code === 11000) { // Duplicate key error code
+        return errorResponse('An account with this email already exists', 400);
+      }
+      
+      return errorResponse('Error creating user account. Please try again later.', 500);
     }
   } catch (error) {
     console.error('Registration error:', error);
-    // Return more detailed error for debugging
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    return NextResponse.json(
-      { error: `Error registering user: ${errorMessage}` },
-      { status: 500 }
-    );
+    return errorResponse('Error registering user. Please try again later.', 500);
   }
 }
