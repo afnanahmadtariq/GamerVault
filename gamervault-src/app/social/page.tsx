@@ -24,8 +24,8 @@ export default function SocialPage() {
         </div>
       </PageHeader>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6">
-        <div className="md:col-span-2 xl:col-span-3 space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
+        <div className="lg:col-span-7 xl:col-span-8 space-y-6">
           <Card>
             <CardHeader>
               <CardTitle>Social Feed</CardTitle>
@@ -132,13 +132,13 @@ export default function SocialPage() {
           </Tabs>
         </div>
 
-        <div className="space-y-6">
-          <Card>
+        <div className="lg:col-span-5 xl:col-span-4 space-y-6 w-full">
+          <Card className="w-full overflow-hidden">
             <CardHeader>
               <CardTitle>Friend Requests</CardTitle>
               <CardDescription>You have 2 pending requests</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 px-4 sm:px-6">
               <FriendRequest
                 name="DragonSlayer"
                 image="https://source.unsplash.com/QXevDflbl8A/40x40" // Replaced local placeholder
@@ -157,18 +157,18 @@ export default function SocialPage() {
             </CardFooter>
           </Card>
 
-          <Card>
+          <Card className="w-full overflow-hidden">
             <CardHeader>
               <CardTitle>Discover Friends</CardTitle>
               <CardDescription>Find other gamers to connect with</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="relative">
+            <CardContent className="space-y-4 px-4 sm:px-6">
+              <div className="relative w-full">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input type="search" placeholder="Search users..." className="pl-8" />
+                <Input type="search" placeholder="Search users..." className="pl-8 w-full" />
               </div>
 
-              <div className="space-y-4 mt-4">
+              <div className="space-y-4 mt-4 w-full">
                 <UserCard
                   name="ArcaneMage"
                   image="https://source.unsplash.com/QXevDflbl8A/400x400" // Replaced local placeholder

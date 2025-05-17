@@ -12,7 +12,7 @@ interface FriendRequestProps {
 
 export function FriendRequest({ name, image, mutualFriends }: FriendRequestProps) {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between w-full">
       <div className="flex items-center gap-3">
         <Avatar>
           <AvatarImage src={image || "/placeholder-user.jpg"} alt={name} />
@@ -26,7 +26,7 @@ export function FriendRequest({ name, image, mutualFriends }: FriendRequestProps
           </div>
         </div>
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-2 flex-shrink-0">
         <Button size="sm" variant="outline">
           Ignore
         </Button>

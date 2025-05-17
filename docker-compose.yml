@@ -2,8 +2,7 @@ version: '3.8'
 
 services:
   web:
-    build:
-      context: ./gamervault-src2 
+    build: .
     container_name: gamervault-part2
     ports:
       - '3100:3000'
