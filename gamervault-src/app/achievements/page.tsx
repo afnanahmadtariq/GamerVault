@@ -133,7 +133,7 @@ export default function AchievementsPage() {
         </TabsList>
 
         <TabsContent value="all">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <AchievementCard
               id="ach-1"
               name="First Victory"
@@ -197,7 +197,7 @@ export default function AchievementsPage() {
         </TabsContent>
 
         <TabsContent value="recent">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <AchievementCard
               id="ach-4"
               name="Speed Demon"
@@ -222,7 +222,7 @@ export default function AchievementsPage() {
         </TabsContent>
 
         <TabsContent value="rare">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <AchievementCard
               id="ach-3"
               name="Master Wizard"

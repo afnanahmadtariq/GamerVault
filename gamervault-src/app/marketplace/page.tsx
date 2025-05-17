@@ -97,7 +97,7 @@ export default function MarketplacePage() {
         </TabsList>
 
         <TabsContent value="all">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <MarketplaceNFT
               id="nft003"
               name="Excalibur"
@@ -150,7 +150,7 @@ export default function MarketplacePage() {
         </TabsContent>
 
         <TabsContent value="weapons">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <MarketplaceNFT
               id="nft003"
               name="Excalibur"
@@ -180,7 +180,7 @@ export default function MarketplacePage() {
 
         {/* Other tab contents would be similar */}
         <TabsContent value="armor">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <MarketplaceNFT
               id="nft005"
               name="Stealth Armor"

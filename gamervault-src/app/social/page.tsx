@@ -24,8 +24,8 @@ export default function SocialPage() {
         </div>
       </PageHeader>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="md:col-span-2 space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="md:col-span-2 xl:col-span-3 space-y-6">
           <Card>
             <CardHeader>
               <CardTitle>Social Feed</CardTitle>

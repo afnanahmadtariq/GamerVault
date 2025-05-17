@@ -181,13 +181,13 @@ export default function WalletPage() {
         </div>
       </header>
       <main className="flex-1 container py-6">
-        <div className="flex flex-col gap-6 max-w-4xl mx-auto">
+        <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <h1 className="text-3xl font-bold tracking-tight">Virtual Wallet</h1>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="md:col-span-2">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <Card className="md:col-span-2 lg:col-span-3">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Wallet className="h-5 w-5 text-primary" />
