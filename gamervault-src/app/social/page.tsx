@@ -169,21 +169,21 @@ export default function SocialPage() {
               <div className="space-y-4 mt-4">
                 <UserCard
                   name="ArcaneMage"
-                  image="/placeholder-user.jpg"
+                  image="https://source.unsplash.com/random/400x400?user" // Replaced local placeholder
                   mutualFriends={5}
                   level={42}
                   game="Wizard Wars"
                 />
                 <UserCard
                   name="ShadowNinja"
-                  image="/placeholder-user.jpg"
+                  image="https://source.unsplash.com/random/400x400?user" // Replaced local placeholder
                   mutualFriends={2}
                   level={38}
                   game="Shadow Assassin"
                 />
                 <UserCard
                   name="EpicWarrior"
-                  image="/placeholder-user.jpg"
+                  image="https://source.unsplash.com/random/400x400?user" // Replaced local placeholder
                   mutualFriends={7}
                   level={56}
                   game="Epic Quest"

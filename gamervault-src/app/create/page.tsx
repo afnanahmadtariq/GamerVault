@@ -275,7 +275,7 @@ export default function CreatePage() {
                           {previewImage ? (
                             <div className="relative w-full h-full">
                               <img
-                                src={previewImage || "/placeholder.svg"}
+                                src={previewImage || "https://via.placeholder.com/400x300.svg?text=Preview"}
                                 alt="Preview"
                                 className="w-full h-full object-contain"
                               />

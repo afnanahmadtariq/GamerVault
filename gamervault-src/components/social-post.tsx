@@ -48,7 +48,7 @@ export function SocialPost({  author,
       <CardHeader className="p-4">
         <div className="flex justify-between items-start">          <div className="flex items-start gap-3">
             <Avatar>
-              <AvatarImage src={author.image || "/placeholder-user.jpg"} alt={author.name} />
+              <AvatarImage src={author.image || "https://source.unsplash.com/random/40x40?avatar"} alt={author.name} />
               <AvatarFallback>{author.name.charAt(0)}</AvatarFallback>
             </Avatar>
             <div>
