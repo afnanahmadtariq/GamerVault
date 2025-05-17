@@ -3,9 +3,7 @@ version: '3.8'
 services:
   web:
     build:
-      context: .
-      args:
-        MONGODB_URI: mongodb://mongo:27017/nextjsdb
+      context: ./gamervault-src2 
     container_name: gamervault-part2
     ports:
       - '3100:3000'

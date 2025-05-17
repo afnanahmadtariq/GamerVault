@@ -13,6 +13,8 @@ RUN npm install --legacy-peer-deps
 # Copy the rest of the code
 COPY gamervault-src/ .
 
+COPY gamervault-src/.env.local .env.local
+
 # Build the Next.js app
 RUN npm run build
 

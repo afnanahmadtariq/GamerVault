@@ -27,14 +27,13 @@ export default function SettingsPage() {
           <TabsTrigger value="security">Security</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="profile" className="mt-6 space-y-6">
-          <Card>
+        <TabsContent value="profile" className="mt-6 space-y-6">          <Card>
             <CardHeader>
               <CardTitle>Profile Information</CardTitle>
               <CardDescription>Update your profile details and public information</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="flex flex-col md:flex-row gap-6">
+              <div className="flex flex-col md:flex-row gap-6 w-full">
                 <div className="flex flex-col items-center gap-4">
                   <Avatar className="h-24 w-24">
                     <AvatarImage src="https://source.unsplash.com/96x96/?abstract" alt="Player One" />
