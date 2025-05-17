@@ -1,6 +1,5 @@
 "use client";
 
-import { SessionProvider } from "next-auth/react";
 import React from "react";
 
 interface AuthProviderProps {
@@ -8,5 +7,6 @@ interface AuthProviderProps {
 }
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-  return <SessionProvider>{children}</SessionProvider>;
+  // SessionProvider is removed as we are not using NextAuth.js
+  return <>{children}</>;
 }

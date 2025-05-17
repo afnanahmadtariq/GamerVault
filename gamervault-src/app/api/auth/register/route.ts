@@ -53,7 +53,7 @@ export async function POST(request: Request) {
       name,
       email,
       password,
-      image: `/placeholder.svg?height=40&width=40&text=${name.charAt(0)}`,
+      image: '/placeholder-user.jpg', // Add default placeholder image
     });
 
     await user.save();

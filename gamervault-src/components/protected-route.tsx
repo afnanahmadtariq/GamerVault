@@ -28,6 +28,8 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   }
 
   if (!isAuthenticated) {
+    // It's important to return null or a loader while redirecting,
+    // otherwise, child components might attempt to render prematurely.
     return null;
   }
 
