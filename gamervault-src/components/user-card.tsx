@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { GamepadIcon, Users } from "lucide-react"

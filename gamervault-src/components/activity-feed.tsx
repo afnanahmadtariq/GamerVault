@@ -1,44 +1,86 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Award, GamepadIcon, ShoppingBag, Trophy } from "lucide-react"
+"use client";
+
+import { useEffect, useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Award, GamepadIcon, ShoppingBag, Trophy, User, Loader2 } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
+
+interface Activity {
+  id: string;
+  type: "achievement" | "game" | "purchase" | "friend";
+  title: string;
+  description: string;
+  time: string;
+  metadata?: Record<string, any>;
+}
 
 export function ActivityFeed() {
-  const activities = [
-    {
-      id: 1,
-      type: "achievement",
-      title: "Dragon Slayer Achievement",
-      description: "You defeated the mighty dragon in Epic Quest",
-      time: "2 days ago",
-      icon: <Trophy className="h-5 w-5 text-primary" />,
-    },
-    {
-      id: 2,
-      type: "game",
-      title: "Level Up!",
-      description: "You reached level 42 in Wizard Wars",
-      time: "5 days ago",
-      icon: <GamepadIcon className="h-5 w-5 text-primary" />,
-    },
-    {
-      id: 3,
-      type: "purchase",
-      title: "NFT Purchased",
-      description: "You acquired the Legendary Sword NFT",
-      time: "1 week ago",
-      icon: <ShoppingBag className="h-5 w-5 text-primary" />,
-    },
-    {
-      id: 4,
-      type: "friend",
-      title: "New Friend",
-      description: "You are now friends with DragonLord",
-      time: "1 week ago",
-      icon: (
-        <Avatar className="h-8 w-8">
-          <AvatarImage src="https://source.unsplash.com/32x32/?abstract" alt="DragonLord" />
-          <AvatarFallback>DL</AvatarFallback>
-        </Avatar>
-      ),
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const fetchActivities = async () => {
+      try {
+        const response = await fetch("/api/activities");
+        
+        if (!response.ok) {
+          throw new Error("Failed to fetch activities");
+        }
+        
+        const data = await response.json();
+        setActivities(data.activities);
+      } catch (error) {
+        console.error("Error fetching activities:", error);
+        toast({
+          title: "Error",
+          description: "Failed to load recent activities",
+          variant: "destructive"
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchActivities();
+  }, [toast]);
+
+  // Generate icon based on activity type
+  const getActivityIcon = (activity: Activity) => {
+    switch (activity.type) {
+      case "achievement":
+        return <Trophy className="h-5 w-5 text-primary" />;
+      case "game":
+        return <GamepadIcon className="h-5 w-5 text-primary" />;
+      case "purchase":
+        return <ShoppingBag className="h-5 w-5 text-primary" />;
+      case "friend":
+        // If we have user image in metadata, use it
+        if (activity.metadata?.userImage) {
+          return (
+            <Avatar className="h-8 w-8">
+              <AvatarImage src={activity.metadata.userImage} alt={activity.metadata.userName || "User"} />
+              <AvatarFallback>{activity.metadata.userInitials || "U"}</AvatarFallback>
+            </Avatar>
+          );
+        }
+        return <User className="h-5 w-5 text-primary" />;
+      default:
+        return <Trophy className="h-5 w-5 text-primary" />;
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center p-6">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (activities.length === 0) {
+    return <div className="text-center p-6 text-muted-foreground">No recent activities</div>;
+  }
     },
     {
       id: 5,

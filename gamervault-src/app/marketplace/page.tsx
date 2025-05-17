@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -97,58 +99,52 @@ export default function MarketplacePage() {
         <TabsContent value="all">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <MarketplaceNFT
-              id="market-1"
+              id="nft003"
               name="Excalibur"
-              image="/placeholder.svg?height=300&width=300&text=Excalibur"
-              game="Epic Quest"
-              rarity="Legendary"
               price={2500}
-              seller="GameMaster"
+              image="https://source.unsplash.com/aO-8_k3hQoY/300x300"
+              rarity="Mythic"
+              category="Weapon"
             />
             <MarketplaceNFT
-              id="market-2"
+              id="nft004"
               name="Phoenix Mount"
-              image="/placeholder.svg?height=300&width=300&text=Phoenix+Mount"
-              game="Dragon Riders"
+              price={3000}
+              image="https://source.unsplash.com/iI9aY14x55A/300x300"
               rarity="Legendary"
-              price={5000}
-              seller="DragonLord"
+              category="Mount"
             />
             <MarketplaceNFT
-              id="market-3"
+              id="nft005"
               name="Stealth Armor"
-              image="/placeholder.svg?height=300&width=300&text=Stealth+Armor"
-              game="Shadow Assassin"
-              rarity="Epic"
               price={1200}
-              seller="NightStalker"
-            />
-            <MarketplaceNFT
-              id="market-4"
-              name="Wizard's Grimoire"
-              image="/placeholder.svg?height=300&width=300&text=Wizard's+Grimoire"
-              game="Wizard Wars"
+              image="https://source.unsplash.com/nApaSgkzaxg/300x300"
               rarity="Epic"
-              price={1500}
-              seller="Merlin"
+              category="Armor"
             />
             <MarketplaceNFT
-              id="market-5"
+              id="nft006"
+              name="Wizard's Grimoire"
+              price={1800}
+              image="https://source.unsplash.com/a_PDPUPWnhQ/300x300"
+              rarity="Legendary"
+              category="Spellbook"
+            />
+            <MarketplaceNFT
+              id="nft007"
               name="Healing Potion"
-              image="/placeholder.svg?height=300&width=300&text=Healing+Potion"
-              game="Epic Quest"
+              price={100}
+              image="https://source.unsplash.com/lZ_4Nztj2Gg/300x300"
               rarity="Common"
-              price={50}
-              seller="Alchemist"
+              category="Consumable"
             />
             <MarketplaceNFT
-              id="market-6"
+              id="nft008"
               name="Racing Car Skin"
-              image="/placeholder.svg?height=300&width=300&text=Racing+Car+Skin"
-              game="Racing Legends"
+              price={500}
+              image="https://source.unsplash.com/yX9m6alodDc/300x300"
               rarity="Rare"
-              price={800}
-              seller="SpeedDemon"
+              category="Cosmetic"
             />
           </div>
         </TabsContent>
@@ -156,31 +152,28 @@ export default function MarketplacePage() {
         <TabsContent value="weapons">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <MarketplaceNFT
-              id="market-1"
+              id="nft003"
               name="Excalibur"
-              image="/placeholder.svg?height=300&width=300&text=Excalibur"
-              game="Epic Quest"
-              rarity="Legendary"
               price={2500}
-              seller="GameMaster"
+              image="https://source.unsplash.com/aO-8_k3hQoY/300x300"
+              rarity="Mythic"
+              category="Weapon"
             />
             <MarketplaceNFT
-              id="market-7"
+              id="nft009"
               name="Frost Bow"
-              image="/placeholder.svg?height=300&width=300&text=Frost+Bow"
-              game="Epic Quest"
+              price={1600}
+              image="https://source.unsplash.com/N_NOTaL4x48/300x300"
               rarity="Epic"
-              price={1800}
-              seller="IceHunter"
+              category="Weapon"
             />
             <MarketplaceNFT
-              id="market-8"
+              id="nft010"
               name="Shadow Dagger"
-              image="/placeholder.svg?height=300&width=300&text=Shadow+Dagger"
-              game="Shadow Assassin"
+              price={900}
+              image="https://source.unsplash.com/P0hV4BqEWZg/300x300"
               rarity="Rare"
-              price={950}
-              seller="NightStalker"
+              category="Weapon"
             />
           </div>
         </TabsContent>
@@ -189,22 +182,20 @@ export default function MarketplacePage() {
         <TabsContent value="armor">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <MarketplaceNFT
-              id="market-3"
+              id="nft005"
               name="Stealth Armor"
-              image="/placeholder.svg?height=300&width=300&text=Stealth+Armor"
-              game="Shadow Assassin"
-              rarity="Epic"
               price={1200}
-              seller="NightStalker"
+              image="https://source.unsplash.com/nApaSgkzaxg/300x300"
+              rarity="Epic"
+              category="Armor"
             />
             <MarketplaceNFT
-              id="market-9"
+              id="nft011"
               name="Dragon Scale Armor"
-              image="/placeholder.svg?height=300&width=300&text=Dragon+Scale+Armor"
-              game="Dragon Riders"
-              rarity="Epic"
-              price={2200}
-              seller="DragonLord"
+              price={2800}
+              image="https://source.unsplash.com/a_PDPUPWnhQ/300x300"
+              rarity="Legendary"
+              category="Armor"
             />
           </div>
         </TabsContent>
@@ -212,13 +203,12 @@ export default function MarketplacePage() {
         <TabsContent value="mounts">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <MarketplaceNFT
-              id="market-2"
+              id="nft004"
               name="Phoenix Mount"
-              image="/placeholder.svg?height=300&width=300&text=Phoenix+Mount"
-              game="Dragon Riders"
+              price={3000}
+              image="https://source.unsplash.com/iI9aY14x55A/300x300"
               rarity="Legendary"
-              price={5000}
-              seller="DragonLord"
+              category="Mount"
             />
           </div>
         </TabsContent>
@@ -226,31 +216,28 @@ export default function MarketplacePage() {
         <TabsContent value="collectibles">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <MarketplaceNFT
-              id="market-4"
+              id="nft006"
               name="Wizard's Grimoire"
-              image="/placeholder.svg?height=300&width=300&text=Wizard's+Grimoire"
-              game="Wizard Wars"
-              rarity="Epic"
-              price={1500}
-              seller="Merlin"
+              price={1800}
+              image="https://source.unsplash.com/a_PDPUPWnhQ/300x300"
+              rarity="Legendary"
+              category="Spellbook"
             />
             <MarketplaceNFT
-              id="market-5"
+              id="nft007"
               name="Healing Potion"
-              image="/placeholder.svg?height=300&width=300&text=Healing+Potion"
-              game="Epic Quest"
+              price={100}
+              image="https://source.unsplash.com/lZ_4Nztj2Gg/300x300"
               rarity="Common"
-              price={50}
-              seller="Alchemist"
+              category="Consumable"
             />
             <MarketplaceNFT
-              id="market-6"
+              id="nft008"
               name="Racing Car Skin"
-              image="/placeholder.svg?height=300&width=300&text=Racing+Car+Skin"
-              game="Racing Legends"
+              price={500}
+              image="https://source.unsplash.com/yX9m6alodDc/300x300"
               rarity="Rare"
-              price={800}
-              seller="SpeedDemon"
+              category="Cosmetic"
             />
           </div>
         </TabsContent>

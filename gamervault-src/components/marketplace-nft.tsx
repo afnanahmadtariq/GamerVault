@@ -1,27 +1,67 @@
-import Link from "next/link"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+"use client";
+
+import Link from "next/link";
+import Image from "next/image";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 interface MarketplaceNFTProps {
-  id: string
-  name: string
-  image: string
-  game: string
-  rarity: string
-  price: number
-  seller: string
+  id: string;
+  name: string;
+  image: string;
+  game: string;
+  rarity: string;
+  price: number;
+  seller: {
+    id: string;
+    name: string;
+    image?: string;
+  };
+  onBuy?: (id: string) => Promise<{ success: boolean, error?: any }>;
 }
 
-export function MarketplaceNFT({ id, name, image, game, rarity, price, seller }: MarketplaceNFTProps) {
+export function MarketplaceNFT({ 
+  id, 
+  name, 
+  image, 
+  game, 
+  rarity, 
+  price, 
+  seller,
+  onBuy 
+}: MarketplaceNFTProps) {
+  const [buying, setBuying] = useState(false);
+
+  const handleBuy = async () => {
+    if (!onBuy) return;
+    
+    setBuying(true);
+    try {
+      await onBuy(id);
+    } finally {
+      setBuying(false);
+    }
+  };
+
   return (
     <Card className="overflow-hidden">
       <div className="aspect-square relative">
-        <img
-          src={image || "https://source.unsplash.com/featured/?nft,marketplace"}
-          alt={name}
-          className="h-full w-full object-cover transition-all hover:scale-105"
-        />
+        {image ? (
+          <Image
+            src={image}
+            alt={name}
+            fill
+            className="object-cover transition-all hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+          />
+        ) : (
+          <div className="h-full w-full bg-muted flex items-center justify-center text-muted-foreground">
+            No Image
+          </div>
+        )}
         <Badge
           className="absolute top-2 right-2"
           variant={rarity === "Legendary" ? "destructive" : rarity === "Epic" ? "default" : "secondary"}

@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -49,11 +51,11 @@ export default function SocialPage() {
               <SocialPost
                 author={{
                   name: "GameMaster",
-                  image: "/placeholder-user.jpg",
+                  image: "https://source.unsplash.com/iFgRcqHznqg/40x40", // Replaced local placeholder
                   verified: true,
                 }}
                 content="Just reached level 100 in Epic Quest! Check out my new legendary sword NFT!"
-                postImage="/placeholder.svg?height=400&width=600&text=Legendary+Sword"
+                postImage="https://source.unsplash.com/aO-8_k3hQoY/600x400" // Replaced local placeholder
                 timestamp="2 hours ago"
                 likes={42}
                 comments={8}
@@ -63,11 +65,11 @@ export default function SocialPage() {
               <SocialPost
                 author={{
                   name: "DragonLord",
-                  image: "/placeholder-user.jpg",
+                  image: "https://source.unsplash.com/QXevDflbl8A/40x40", // Replaced local placeholder
                   verified: true,
                 }}
                 content="Created a new custom skin for my dragon mount. What do you think?"
-                postImage="/placeholder.svg?height=400&width=600&text=Custom+Dragon+Skin"
+                postImage="https://source.unsplash.com/qJtS_jA7H8Q/600x400" // Replaced local placeholder
                 timestamp="5 hours ago"
                 likes={78}
                 comments={15}
@@ -77,7 +79,7 @@ export default function SocialPage() {
               <SocialPost
                 author={{
                   name: "SpeedDemon",
-                  image: "/placeholder-user.jpg",
+                  image: "https://source.unsplash.com/iFgRcqHznqg/40x40", // Replaced local placeholder
                   verified: false,
                 }}
                 content="Just broke my personal record in Racing Legends! 1:42.56 on the Mountain Pass track."
@@ -95,11 +97,11 @@ export default function SocialPage() {
                 <SocialPost
                   author={{
                     name: "DragonLord",
-                    image: "/placeholder-user.jpg",
+                    image: "https://source.unsplash.com/QXevDflbl8A/40x40", // Replaced local placeholder
                     verified: true,
                   }}
                   content="Created a new custom skin for my dragon mount. What do you think?"
-                  postImage="/placeholder.svg?height=400&width=600&text=Custom+Dragon+Skin"
+                  postImage="https://source.unsplash.com/qJtS_jA7H8Q/600x400" // Replaced local placeholder
                   timestamp="5 hours ago"
                   likes={78}
                   comments={15}
@@ -114,11 +116,11 @@ export default function SocialPage() {
                 <SocialPost
                   author={{
                     name: "GameMaster",
-                    image: "/placeholder-user.jpg",
+                    image: "https://source.unsplash.com/iFgRcqHznqg/40x40", // Replaced local placeholder
                     verified: true,
                   }}
                   content="Just reached level 100 in Epic Quest! Check out my new legendary sword NFT!"
-                  postImage="/placeholder.svg?height=400&width=600&text=Legendary+Sword"
+                  postImage="https://source.unsplash.com/aO-8_k3hQoY/600x400" // Replaced local placeholder
                   timestamp="2 hours ago"
                   likes={42}
                   comments={8}
@@ -139,12 +141,12 @@ export default function SocialPage() {
             <CardContent className="space-y-4">
               <FriendRequest
                 name="DragonSlayer"
-                image="/placeholder-user.jpg"
+                image="https://source.unsplash.com/QXevDflbl8A/40x40" // Replaced local placeholder
                 mutualFriends={3}
               />
               <FriendRequest
                 name="MagicWizard"
-                image="/placeholder-user.jpg"
+                image="https://source.unsplash.com/iFgRcqHznqg/40x40" // Replaced local placeholder
                 mutualFriends={1}
               />
             </CardContent>
@@ -169,21 +171,21 @@ export default function SocialPage() {
               <div className="space-y-4 mt-4">
                 <UserCard
                   name="ArcaneMage"
-                  image="https://source.unsplash.com/random/400x400?user" // Replaced local placeholder
+                  image="https://source.unsplash.com/QXevDflbl8A/400x400" // Replaced local placeholder
                   mutualFriends={5}
                   level={42}
                   game="Wizard Wars"
                 />
                 <UserCard
                   name="ShadowNinja"
-                  image="https://source.unsplash.com/random/400x400?user" // Replaced local placeholder
+                  image="https://source.unsplash.com/iFgRcqHznqg/400x400" // Replaced local placeholder
                   mutualFriends={2}
                   level={38}
                   game="Shadow Assassin"
                 />
                 <UserCard
                   name="EpicWarrior"
-                  image="https://source.unsplash.com/random/400x400?user" // Replaced local placeholder
+                  image="https://source.unsplash.com/QXevDflbl8A/400x400" // Replaced local placeholder
                   mutualFriends={7}
                   level={56}
                   game="Epic Quest"

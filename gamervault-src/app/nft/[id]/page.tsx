@@ -207,7 +207,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
                   <div className="text-xs text-muted-foreground">{user.email}</div>
                 </div>
                 <Avatar>
-                  <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
+                  <AvatarImage src={user.avatar || "https://source.unsplash.com/iFgRcqHznqg/100x100"} alt={user.name} />
                   <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <Button variant="ghost" size="icon" onClick={handleLogout}>
@@ -240,7 +240,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card className="overflow-hidden">
               <div className="aspect-square w-full bg-muted relative">
-                <img src={nft.image || "/placeholder.svg"} alt={nft.name} className="h-full w-full object-cover" />
+                <img src={nft.image || "https://source.unsplash.com/ZtxED1cpB1E/500x500"} alt={nft.name} className="h-full w-full object-cover" />
                 <div className="absolute top-4 right-4 flex gap-2">
                   <Button variant="secondary" size="icon" className="rounded-full h-8 w-8">
                     <Share2 className="h-4 w-4" />

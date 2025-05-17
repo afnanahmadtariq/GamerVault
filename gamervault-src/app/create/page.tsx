@@ -159,7 +159,7 @@ export default function CreatePage() {
                   <div className="text-xs text-muted-foreground">{user.email}</div>
                 </div>
                 <Avatar>
-                  <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
+                  <AvatarImage src={user.avatar || "https://source.unsplash.com/QXevDflbl8A/100x100"} alt={user.name} />
                   <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <Button variant="ghost" size="icon" onClick={handleLogout}>
@@ -275,7 +275,7 @@ export default function CreatePage() {
                           {previewImage ? (
                             <div className="relative w-full h-full">
                               <img
-                                src={previewImage || "https://via.placeholder.com/400x300.svg?text=Preview"}
+                                src={previewImage || "https://source.unsplash.com/eOpewngf68w/400x300"}
                                 alt="Preview"
                                 className="w-full h-full object-contain"
                               />

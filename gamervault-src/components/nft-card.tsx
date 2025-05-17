@@ -1,27 +1,40 @@
-import Link from "next/link"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardFooter, CardHeader } from "@/components/ui/card"
-import { Calendar, ExternalLink } from "lucide-react"
+import * as React from 'react';
+
+"use client";
+
+import Link from "next/link";
+import Image from "next/image";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardFooter, CardHeader } from "@/components/ui/card";
+import { Calendar, ExternalLink } from "lucide-react";
 
 interface NFTCardProps {
-  id: string
-  name: string
-  image: string
-  game: string
-  rarity: string
-  acquired: string
+  id: string;
+  name: string;
+  image: string;
+  game: string;
+  rarity: string;
+  acquired: string;
 }
 
 export function NFTCard({ id, name, image, game, rarity, acquired }: NFTCardProps) {
   return (
     <Card className="overflow-hidden">
       <div className="aspect-square relative">
-        <img
-          src={image || "https://source.unsplash.com/featured/?nft,art"}
-          alt={name}
-          className="h-full w-full object-cover transition-all hover:scale-105"
-        />
+        {image ? (
+          <Image
+            src={image}
+            alt={name}
+            fill
+            className="object-cover transition-all hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+          />
+        ) : (
+          <div className="h-full w-full bg-muted flex items-center justify-center text-muted-foreground">
+            No Image
+          </div>
+        )}
         <Badge
           className="absolute top-2 right-2"
           variant={rarity === "Legendary" ? "destructive" : rarity === "Epic" ? "default" : "secondary"}

@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 "use client"
 import type React from "react"
 import { MainSidebar } from "@/components/main-sidebar"
