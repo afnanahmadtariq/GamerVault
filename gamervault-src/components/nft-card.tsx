@@ -18,7 +18,7 @@ export function NFTCard({ id, name, image, game, rarity, acquired }: NFTCardProp
     <Card className="overflow-hidden">
       <div className="aspect-square relative">
         <img
-          src={image || "/placeholder.svg"}
+          src={image || "https://source.unsplash.com/featured/?nft,art"}
           alt={name}
           className="h-full w-full object-cover transition-all hover:scale-105"
         />

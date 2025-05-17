@@ -32,7 +32,7 @@ export function AchievementCard({
         <div className="flex justify-between items-start">
           <div className="flex items-center gap-3">
             <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
-              <img src={image || "/placeholder.svg"} alt={name} className="h-8 w-8" />
+              <img src={image || "https://source.unsplash.com/32x32/?achievement"} alt={name} className="h-8 w-8" />
             </div>
             <div>
               <h3 className="font-semibold text-base">{name}</h3>

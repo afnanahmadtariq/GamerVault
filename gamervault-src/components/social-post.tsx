@@ -50,7 +50,7 @@ export function SocialPost({
         <div className="flex justify-between items-start">
           <div className="flex items-start gap-3">
             <Avatar>
-              <AvatarImage src={author.avatar || "/placeholder.svg"} alt={author.name} />
+              <AvatarImage src={author.avatar || "https://source.unsplash.com/random"} alt={author.name} />
               <AvatarFallback>{author.name.charAt(0)}</AvatarFallback>
             </Avatar>
             <div>
@@ -72,7 +72,7 @@ export function SocialPost({
 
         {image && (
           <div className="rounded-md overflow-hidden">
-            <img src={image || "/placeholder.svg"} alt="Post content" className="w-full h-auto" />
+            <img src={image || "https://source.unsplash.com/featured/?gaming,technology"} alt="Post content" className="w-full h-auto" />
           </div>
         )}
       </CardContent>

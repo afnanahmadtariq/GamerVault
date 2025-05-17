@@ -15,7 +15,7 @@ export function RecentAchievement({ name, game, description, date, image, points
     <div className="flex items-start gap-4">
       <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden">
         {image ? (
-          <img src={image || "/placeholder.svg"} alt={name} className="h-full w-full object-cover" />
+          <img src={image || "https://source.unsplash.com/featured/?achievement,gaming"} alt={name} className="h-full w-full object-cover" />
         ) : (
           <Trophy className="h-5 w-5 text-primary" />
         )}

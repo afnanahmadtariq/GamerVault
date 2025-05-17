@@ -169,7 +169,7 @@ export default function WalletPage() {
                   <div className="text-xs text-muted-foreground">{user.email}</div>
                 </div>
                 <Avatar>
-                  <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
+                  <AvatarImage src={user.avatar || "https://source.unsplash.com/random"} alt={user.name} />
                   <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <Button variant="ghost" size="icon" onClick={handleLogout}>

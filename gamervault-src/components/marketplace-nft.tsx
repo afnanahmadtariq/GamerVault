@@ -18,7 +18,7 @@ export function MarketplaceNFT({ id, name, image, game, rarity, price, seller }:
     <Card className="overflow-hidden">
       <div className="aspect-square relative">
         <img
-          src={image || "/placeholder.svg"}
+          src={image || "https://source.unsplash.com/featured/?nft,marketplace"}
           alt={name}
           className="h-full w-full object-cover transition-all hover:scale-105"
         />

@@ -13,7 +13,7 @@ export function FriendRequest({ name, avatar, mutualFriends }: FriendRequestProp
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
         <Avatar>
-          <AvatarImage src={avatar || "/placeholder.svg"} alt={name} />
+          <AvatarImage src={avatar || "https://source.unsplash.com/random"} alt={name} />
           <AvatarFallback>{name.charAt(0)}</AvatarFallback>
         </Avatar>
         <div>

@@ -27,7 +27,7 @@ export function MainSidebar() {
   const userData = {
     name: user?.name || "Player One",
     email: user?.email || "player@example.com",
-    avatar: user?.image || "/placeholder.svg?height=40&width=40&text=P1",
+    avatar: user?.image || "https://source.unsplash.com/40x40/?abstract",
     level: 42,
     notifications: 3,
   }
@@ -54,7 +54,7 @@ export function MainSidebar() {
         <div className="px-4 py-2">
           <div className="flex items-center gap-3 mb-6 mt-2">
             <Avatar>
-              <AvatarImage src={userData.avatar || "/placeholder.svg"} alt={userData.name} />
+              <AvatarImage src={userData.avatar || "https://source.unsplash.com/random"} alt={userData.name} />
               <AvatarFallback>{userData.name?.charAt(0)}</AvatarFallback>
             </Avatar>
             <div>

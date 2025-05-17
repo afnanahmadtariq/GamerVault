@@ -35,7 +35,7 @@ export function ActivityFeed() {
       time: "1 week ago",
       icon: (
         <Avatar className="h-8 w-8">
-          <AvatarImage src="/placeholder.svg?height=32&width=32&text=DL" alt="DragonLord" />
+          <AvatarImage src="https://source.unsplash.com/32x32/?abstract" alt="DragonLord" />
           <AvatarFallback>DL</AvatarFallback>
         </Avatar>
       ),
