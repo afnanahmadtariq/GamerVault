@@ -17,17 +17,10 @@ pipeline {
     stage('Build and Deploy') {
       steps {
         script {
-          dir('part2') {  // Ensure we're in the correct directory
-            try {
-              // Force recreation of containers to avoid the ContainerConfig error
-              sh 'docker-compose -p $PROJECT_NAME -f docker-compose.yml down -v --remove-orphans || true'
-              sh 'docker-compose -p $PROJECT_NAME -f docker-compose.yml up -d --build'
-            } catch (Exception e) {
-              echo "Error during build and deploy: ${e.message}"
-              currentBuild.result = 'FAILURE'
-              error "Failed to build and deploy: ${e.message}"
-            }
-          }
+          // dir('part2') {  // Ensure we're in the correct directory
+            // sh 'docker-compose -p $PROJECT_NAME -f docker-compose.yml down -v --remove-orphans || true'
+            sh 'docker-compose -p $PROJECT_NAME -f docker-compose.yml up -d --build'
+          // }
         }
       }
     }
