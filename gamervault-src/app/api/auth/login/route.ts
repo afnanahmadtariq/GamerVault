@@ -16,7 +16,7 @@ if (!JWT_SECRET) {
 // In production, use Redis or another solution that works with serverless
 const loginAttempts = new Map<string, { count: number, timestamp: number }>();
 
-const RATE_LIMIT = 5; // Maximum attempts
+const RATE_LIMIT = 5000; // Maximum attempts (Bigger Number for testing)
 const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes in milliseconds
 
 function checkRateLimit(ip: string): boolean {
