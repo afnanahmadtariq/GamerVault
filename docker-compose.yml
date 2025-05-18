@@ -20,7 +20,7 @@ services:
       - ./gamervault-src:/gamervault-src
 
   mongo:
-    image: mongo:7
+    image: mongo:8
     container_name: mongo_db-part2
     volumes:
       - mongo_data:/data/db
