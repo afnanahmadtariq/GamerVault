@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { GamepadIcon as GameController, Loader2 } from "lucide-react"
+import { GamepadIcon as GameController, Loader2, CheckCircle2, AlertCircle } from "lucide-react"
 import { useAuth } from "@/hooks/use-auth"
 import { toast } from "sonner"
 
@@ -25,6 +25,13 @@ export default function RegisterPage() {
     confirmPassword: "",
   })
   
+  // Password validation states
+  const [passwordValidation, setPasswordValidation] = useState({
+    minLength: false,
+    hasLetterAndNumber: false,
+    passwordsMatch: false
+  })
+  
   // Get redirect path from URL if available
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -33,6 +40,15 @@ export default function RegisterPage() {
       setRedirectPath(redirect);
     }
   }, []);
+
+  // Validate password whenever it changes
+  useEffect(() => {
+    setPasswordValidation({
+      minLength: formData.password.length >= 8,
+      hasLetterAndNumber: /(?=.*[A-Za-z])(?=.*\d)/.test(formData.password),
+      passwordsMatch: formData.password === formData.confirmPassword && formData.password !== ""
+    })
+  }, [formData.password, formData.confirmPassword])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -47,6 +63,12 @@ export default function RegisterPage() {
       return
     }
 
+    // Check password requirements before submission
+    if (!passwordValidation.minLength || !passwordValidation.hasLetterAndNumber) {
+      toast.error("Password does not meet requirements")
+      return
+    }
+
     setIsLoading(true)
 
     try {
@@ -56,7 +78,8 @@ export default function RegisterPage() {
         toast.error(result.error || "Failed to register")
         setIsLoading(false)
         return
-      }      toast.success("Registration successful!")
+      }      
+      toast.success("Registration successful!")
       router.push(redirectPath)
     } catch (error) {
       console.error("Registration error:", error)
@@ -64,6 +87,13 @@ export default function RegisterPage() {
       setIsLoading(false)
     }
   }
+
+  // Helper for validation icons
+  const ValidationIcon = ({ isValid }: { isValid: boolean }) => (
+    isValid 
+      ? <CheckCircle2 className="h-4 w-4 text-green-500" /> 
+      : <AlertCircle className="h-4 w-4 text-amber-500" />
+  )
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-background to-background/80 p-4">
@@ -112,7 +142,25 @@ export default function RegisterPage() {
                 required
                 value={formData.password}
                 onChange={handleChange}
+                className={formData.password && (!passwordValidation.minLength || !passwordValidation.hasLetterAndNumber) ? "border-amber-500" : ""}
               />
+              
+              {/* Password requirements */}
+              <div className="mt-2 space-y-1 text-sm text-muted-foreground">
+                <p className="font-medium text-xs">Password requirements:</p>
+                <div className="flex items-center gap-2">
+                  <ValidationIcon isValid={passwordValidation.minLength} />
+                  <span className={passwordValidation.minLength ? "text-muted-foreground" : "text-amber-500"}>
+                    At least 8 characters
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <ValidationIcon isValid={passwordValidation.hasLetterAndNumber} />
+                  <span className={passwordValidation.hasLetterAndNumber ? "text-muted-foreground" : "text-amber-500"}>
+                    Contains at least one letter and one number
+                  </span>
+                </div>
+              </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="confirmPassword">Confirm Password</Label>
@@ -123,11 +171,26 @@ export default function RegisterPage() {
                 required
                 value={formData.confirmPassword}
                 onChange={handleChange}
+                className={formData.confirmPassword && !passwordValidation.passwordsMatch ? "border-amber-500" : ""}
               />
+              
+              {/* Password matching indicator */}
+              {formData.confirmPassword && (
+                <div className="flex items-center gap-2 mt-2 text-sm">
+                  <ValidationIcon isValid={passwordValidation.passwordsMatch} />
+                  <span className={passwordValidation.passwordsMatch ? "text-green-500" : "text-amber-500"}>
+                    {passwordValidation.passwordsMatch ? "Passwords match" : "Passwords do not match"}
+                  </span>
+                </div>
+              )}
             </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button 
+              type="submit" 
+              className="w-full" 
+              disabled={isLoading || !passwordValidation.minLength || !passwordValidation.hasLetterAndNumber || !passwordValidation.passwordsMatch}
+            >
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
