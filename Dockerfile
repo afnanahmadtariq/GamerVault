@@ -20,7 +20,7 @@ ENV MONGODB_URI=$MONGODB_URI
 ENV JWT_SECRET=$JWT_SECRET
 
 # Build the Next.js app
-RUN npm run build
+RUN npm run build || { echo "Build failed"; exit 1; }
 
 # Expose the app port
 EXPOSE 3000
