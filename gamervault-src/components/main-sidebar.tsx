@@ -23,9 +23,10 @@ export function MainSidebar() {
   const router = useRouter()
   const { user, logout } = useAuth()
   // Default user data with actual auth data
-  const userData = {    name: user?.name || "Player One",
+  const userData = {
+    name: user?.name || "Player One",
     email: user?.email || "player@example.com",
-    image: user?.image || "https://source.unsplash.com/random/100x100?gaming,profile,gamer,headset", // Updated Unsplash image
+    image: user?.image || "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=100&h=100&fit=crop&q=80", // Updated Unsplash image
     level: 42,
     notifications: 3,
   }
@@ -53,8 +54,10 @@ export function MainSidebar() {
         </div>
       </SidebarHeader>
       <SidebarContent>
-        <div className="px-4 py-2">          <div className="flex items-center gap-3 mb-6 mt-2">            <Avatar>
-              <AvatarImage src={userData.image || "https://source.unsplash.com/random/100x100?gamer,profile,person"} alt={userData.name} />
+        <div className="px-4 py-2">
+          <div className="flex items-center gap-3 mb-6 mt-2">
+            <Avatar>
+              <AvatarImage src={userData.image || 'https://images.unsplash.com/photo-1580894908361-967195033215?w=100&h=100&fit=crop&q=80'} alt={userData.name} />
               <AvatarFallback>{userData.name?.charAt(0)}</AvatarFallback>
             </Avatar>
             <div>

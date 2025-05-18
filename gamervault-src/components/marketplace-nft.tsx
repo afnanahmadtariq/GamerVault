@@ -49,10 +49,11 @@ export function MarketplaceNFT({
   };
 
   return (
-    <Card className="overflow-hidden">      <div className="aspect-square relative">
+    <Card className="overflow-hidden">
+      <div className="aspect-square relative">
         {image ? (
           <Image
-            src={image || `https://source.unsplash.com/random/800x800?${encodeURIComponent(game || 'gaming')},nft,art,collectible`}
+            src={image || 'https://images.unsplash.com/photo-1554941829-202a0b2403b8?w=800&h=800&fit=crop&q=80'}
             alt={name}
             fill
             className="object-cover transition-all hover:scale-105"

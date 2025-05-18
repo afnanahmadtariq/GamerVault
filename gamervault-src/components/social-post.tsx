@@ -46,8 +46,10 @@ export function SocialPost({  author,
   return (
     <Card>
       <CardHeader className="p-4">
-        <div className="flex justify-between items-start">          <div className="flex items-start gap-3">            <Avatar>
-              <AvatarImage src={author.image || `https://source.unsplash.com/random/100x100?face,profile`} alt={author.name} />
+        <div className="flex justify-between items-start">
+          <div className="flex items-start gap-3">
+            <Avatar>
+              <AvatarImage src={author.image || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&q=80'} alt={author.name} />
               <AvatarFallback>{author.name.charAt(0)}</AvatarFallback>
             </Avatar>
             <div>
@@ -64,9 +66,11 @@ export function SocialPost({  author,
           </Button>
         </div>
       </CardHeader>
-      <CardContent className="p-4 pt-0 space-y-4">        <p>{content}</p>        {postImage && (
+      <CardContent className="p-4 pt-0 space-y-4">
+        <p>{content}</p>
+        {postImage && (
           <div className="rounded-md overflow-hidden">
-            <img src={postImage || "https://source.unsplash.com/random/1200x800?gaming,esports,technology"} alt="Post content" className="w-full h-auto" />
+            <img src={postImage || 'https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=1200&h=800&fit=crop&q=80'} alt="Post content" className="w-full h-auto" />
           </div>
         )}
       </CardContent>

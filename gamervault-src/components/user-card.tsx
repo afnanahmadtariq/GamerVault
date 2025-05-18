@@ -15,8 +15,9 @@ interface UserCardProps {
 export function UserCard({ name, image, mutualFriends, level, game }: UserCardProps) {
   return (
     <div className="flex items-center justify-between w-full">
-      <div className="flex items-center gap-3">        <Avatar>
-          <AvatarImage src={image || `https://source.unsplash.com/random/100x100?profile,${encodeURIComponent(game)},gamer`} alt={name} />
+      <div className="flex items-center gap-3">
+        <Avatar>
+          <AvatarImage src={image || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop&q=80'} alt={name} />
           <AvatarFallback>{name.charAt(0)}</AvatarFallback>
         </Avatar>
         <div className="min-w-0">

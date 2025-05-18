@@ -60,7 +60,7 @@ export function ActivityFeed() {
           return (
             <Avatar className="h-8 w-8">
               <AvatarImage 
-                src={activity.metadata.userImage || `https://source.unsplash.com/random/100x100?profile,gamer,${Math.floor(Math.random() * 1000)}`} 
+                src={activity.metadata.userImage || 'https://images.unsplash.com/photo-1618641986557-1ecd230959aa?w=100&h=100&fit=crop&q=80'} 
                 alt={activity.metadata.userName || "User"} 
               />
               <AvatarFallback>{activity.metadata.userInitials || "U"}</AvatarFallback>

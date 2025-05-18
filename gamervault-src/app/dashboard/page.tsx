@@ -75,12 +75,13 @@ export default function DashboardPage() {
                 <CardTitle>Recent Achievements</CardTitle>
                 <CardDescription>Your latest gaming accomplishments</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">                <RecentAchievement
+              <CardContent className="space-y-4">
+                <RecentAchievement
                   name="Dragon Slayer"
                   game="Epic Quest"
                   description="Defeat the mighty dragon in the Mountain of Doom"
                   date="2 days ago"
-                  image="https://source.unsplash.com/random/80x80?dragon,fantasy,epic"
+                  image="https://images.unsplash.com/photo-1577598971432-080890784379?w=80&h=80&fit=crop&q=80"
                   points={50}
                 />
                 <RecentAchievement
@@ -88,7 +89,7 @@ export default function DashboardPage() {
                   game="Wizard Wars"
                   description="Cast 1000 spells successfully"
                   date="5 days ago"
-                  image="https://source.unsplash.com/random/80x80?wizard,magic,fantasy"
+                  image="https://images.unsplash.com/photo-1598387993441-3cf0958d16e7?w=80&h=80&fit=crop&q=80"
                   points={100}
                 />
                 <RecentAchievement
@@ -96,7 +97,7 @@ export default function DashboardPage() {
                   game="Racing Legends"
                   description="Complete a race in under 2 minutes"
                   date="1 week ago"
-                  image="https://source.unsplash.com/random/80x80?racing,car,speed"
+                  image="https://images.unsplash.com/photo-1552642762-99c051b87899?w=80&h=80&fit=crop&q=80"
                   points={25}
                 />
               </CardContent>
@@ -149,10 +150,11 @@ export default function DashboardPage() {
               <CardDescription>Recently acquired digital assets</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">                <NFTCard
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <NFTCard
                   id="nft-1"
                   name="Legendary Sword"
-                  image="https://source.unsplash.com/random/800x800?sword,weapon,fantasy"
+                  image="https://images.unsplash.com/photo-1601629657387-5df99902d615?w=800&h=800&fit=crop&q=80"
                   game="Epic Quest"
                   rarity="Legendary"
                   acquired="2023-05-15"
@@ -160,7 +162,7 @@ export default function DashboardPage() {
                 <NFTCard
                   id="nft-2"
                   name="Golden Shield"
-                  image="https://source.unsplash.com/random/800x800?shield,gold,armor"
+                  image="https://images.unsplash.com/photo-1585409677983-0f6c41ca9c3b?w=800&h=800&fit=crop&q=80"
                   game="Epic Quest"
                   rarity="Epic"
                   acquired="2023-06-22"
@@ -168,7 +170,7 @@ export default function DashboardPage() {
                 <NFTCard
                   id="nft-3"
                   name="Mystic Staff"
-                  image="https://source.unsplash.com/random/800x800?staff,magic,wizard"
+                  image="https://images.unsplash.com/photo-1549122728-f51970943692?w=800&h=800&fit=crop&q=80"
                   game="Wizard Wars"
                   rarity="Rare"
                   acquired="2023-07-10"
@@ -176,7 +178,7 @@ export default function DashboardPage() {
                 <NFTCard
                   id="nft-4"
                   name="Dragon Mount"
-                  image="https://source.unsplash.com/random/800x800?dragon,fantasy,creature"
+                  image="https://images.unsplash.com/photo-1563003959-684481776534?w=800&h=800&fit=crop&q=80"
                   game="Dragon Riders"
                   rarity="Legendary"
                   acquired="2023-08-05"
