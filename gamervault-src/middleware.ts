@@ -8,9 +8,15 @@ const JWT_SECRET_RAW = process.env.JWT_SECRET || "";
 // Only create the text encoder instance once, outside the middleware function for better performance
 const JWT_SECRET = new TextEncoder().encode(JWT_SECRET_RAW);
 
-// Check in non-production environments
-if (!JWT_SECRET_RAW) {
-  console.warn("JWT_SECRET environment variable is not defined in middleware");
+// Check for JWT_SECRET
+if (!JWT_SECRET_RAW && process.env.NODE_ENV !== 'test') {
+  console.error("CRITICAL: JWT_SECRET environment variable is not defined or is empty in middleware. This is a security risk.");
+  // For a middleware, directly throwing might halt too many requests.
+  // Consider how your application should behave - perhaps return a generic error response.
+  // However, to be consistent with other checks and highlight the severity:
+  throw new Error("JWT_SECRET is not configured properly in middleware.");
+} else if (!JWT_SECRET_RAW && process.env.NODE_ENV === 'test') {
+  console.warn("JWT_SECRET environment variable is not defined or empty in middleware (running in test environment).");
 }
 
 // Define protected routes only once, outside the middleware function

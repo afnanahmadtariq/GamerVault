@@ -55,6 +55,16 @@ export function configureEnv() {
     throw new Error('MONGODB_URI environment variable is not defined. Please set it in .env, .env.local, or in your environment.');
   }
 
+  const JWT_SECRET = process.env.JWT_SECRET;
+  if (!JWT_SECRET) {
+    // In a test environment, we might not always have this set, so only error out if not testing
+    if (process.env.NODE_ENV !== 'test') {
+      throw new Error('JWT_SECRET environment variable is not defined. Please set it in .env, .env.local, or in your environment.');
+    } else {
+      console.warn('JWT_SECRET is not defined, but running in test environment.');
+    }
+  }
+
   return process.env;
 }
 
