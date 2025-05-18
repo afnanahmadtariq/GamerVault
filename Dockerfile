@@ -25,7 +25,9 @@ RUN npm run build
 # Expose the app port
 EXPOSE 3000
 
-RUN npm run seed
+RUN echo '#!/bin/sh\necho "Waiting for MongoDB to be ready..."\nsleep 5\necho "Running seed script..."\nnpm run seed\necho "Starting application..."\nexec npm start' > /start.sh && chmod +x /start.sh
+
+CMD ["/start.sh"]
 
 # Start the app
-CMD ["npm", "start"]
+# CMD ["npm", "start"]
