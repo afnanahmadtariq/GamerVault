@@ -19,10 +19,8 @@ services:
     volumes:
       - ./gamervault-src:/gamervault-src
 
-
-
   mongo:
-    image: mongo:8.0.9
+    image: mongo:7
     container_name: mongo_db-part2
     ports:
       - '28017:27017'
