@@ -2,7 +2,7 @@
 FROM node:24-alpine
 
 # Set working directory
-WORKDIR /app
+WORKDIR /gamervault-src
 
 # Copy package.json and lock file
 COPY gamervault-src/package*.json ./
