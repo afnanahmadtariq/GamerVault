@@ -2,13 +2,13 @@
   "name": "gamervault",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
-  "scripts": {
+  "type": "module",  "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "seed": "node scripts/seed.js",
+    "seed:docker": "sh ./docker-seed.sh",
     "fix:imports": "node scripts/fix-react-imports.mjs",
     "type-check": "tsc --noEmit"
   },

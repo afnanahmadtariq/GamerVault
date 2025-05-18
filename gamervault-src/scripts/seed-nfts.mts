@@ -1,16 +1,14 @@
 import { connect } from 'mongoose';
 import NFT from '../models/NFT.js';
 import User from '../models/User.js';
-import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { fileURLToPath } from 'url';
+import { configureEnv } from '../lib/env-config.js';
 
-dotenv.config({ path: '.env.local' });
+// Configure environment variables from multiple sources
+configureEnv();
 
 const MONGODB_URI = process.env.MONGODB_URI;
-if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
-}
 
 async function seedNFTs() {
   try {

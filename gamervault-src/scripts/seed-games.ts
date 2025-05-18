@@ -1,14 +1,12 @@
 import { connect } from 'mongoose';
 import Game from '../models/Game.js';
-import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
+import { configureEnv } from '../lib/env-config.js';
 
-dotenv.config({ path: '.env.local' });
+// Configure environment variables from multiple sources
+configureEnv();
 
 const MONGODB_URI = process.env.MONGODB_URI;
-if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
-}
 
 const games = [
   {

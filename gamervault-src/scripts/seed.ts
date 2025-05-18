@@ -2,15 +2,13 @@ import seedGames from './seed-games.js';
 import seedAchievements from './seed-achievements.js';
 import seedNFTs from './seed-nfts.js';
 import { connect } from 'mongoose';
-import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
+import { configureEnv } from '../lib/env-config.js';
 
-dotenv.config({ path: '.env.local' });
+// Configure environment variables from multiple sources
+configureEnv();
 
 const MONGODB_URI = process.env.MONGODB_URI;
-if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
-}
 
 async function seedAll() {
   try {

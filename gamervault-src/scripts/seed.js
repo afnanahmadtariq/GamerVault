@@ -5,25 +5,42 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
 
-// Configure dotenv
+// Configure environment variables from multiple sources
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const envPath = path.join(__dirname, '..', '.env.local');
+const rootDir = path.resolve(__dirname, '..');
 
-console.log(`Looking for .env.local at: ${envPath}`);
-if (!fs.existsSync(envPath)) {
-  console.error(`.env.local file not found at ${envPath}`);
-  console.log('Available files in directory:');
-  console.log(fs.readdirSync(path.dirname(envPath)));
+// Try different environment files in order of precedence
+const envFiles = [
+  '.env',
+  '.env.local',
+  '.env.development',
+  '.env.production'
+];
+
+let loaded = false;
+
+console.log(`Looking for environment files in: ${rootDir}`);
+
+for (const file of envFiles) {
+  const envPath = path.join(rootDir, file);
+  if (fs.existsSync(envPath)) {
+    console.log(`Loading environment variables from ${file}`);
+    dotenv.config({ path: envPath });
+    loaded = true;
+  }
 }
 
-dotenv.config({ path: envPath });
+// Even if no files found, environment variables might be set directly (e.g. in Docker)
+if (!loaded) {
+  console.log('No .env files found. Using existing environment variables.');
+}
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) {
-  console.error('MONGODB_URI environment variable not found. Please check your .env.local file.');
+  console.error('MONGODB_URI environment variable not found.');
   console.log('Available environment variables:', Object.keys(process.env).filter(key => !key.includes('=')));
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+  throw new Error('MONGODB_URI environment variable is not defined. Please set it in .env, .env.local, or in your environment.');
 }
 
 // Game model schema

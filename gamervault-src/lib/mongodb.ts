@@ -1,10 +1,12 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI || "";
+// Import our environment configuration function
+import { configureEnv } from './env-config';
 
-if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
-}
+// Configure environment variables
+configureEnv();
+
+const MONGODB_URI = process.env.MONGODB_URI || "";
 
 interface MongoConnection {
   conn: typeof mongoose | null;
