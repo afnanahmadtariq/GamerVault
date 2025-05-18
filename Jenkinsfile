@@ -19,6 +19,7 @@ pipeline {
         script {
           // dir('part2') {  // Ensure we're in the correct directory
             sh 'docker-compose -p $PROJECT_NAME -f docker-compose.yml down -v --remove-orphans || true'
+            sh 'docker system prune -af || true'
             sh 'docker-compose -p $PROJECT_NAME -f docker-compose.yml up -d --build'
           // }
         }
