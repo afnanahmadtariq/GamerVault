@@ -105,9 +105,15 @@ export async function POST(req: NextRequest) {
     try {
       // Create JWT token with user ID and minimal payload
       const token = sign(
-        { userId: user.id.toString(), email: user.email },
-        JWT_SECRET, // Used as a raw string
-        { expiresIn: "7d" }
+        { 
+          userId: user.id.toString(), 
+          email: user.email,
+          // Avoid putting sensitive data in JWT
+        },
+        JWT_SECRET,
+        {
+          expiresIn: "7d", // Token expires in 7 days
+        }
       );
 
       const response = NextResponse.json({
@@ -123,7 +129,7 @@ export async function POST(req: NextRequest) {
       // Set HTTP-only cookie in the response
       response.cookies.set("token", token, {
         httpOnly: true,
-        secure: !IS_DEVELOPMENT, // Secure in production
+        secure: false, // No longer requiring HTTPS even in production
         sameSite: "strict",      // Stricter same-site policy
         path: "/",
         maxAge: 60 * 60 * 24 * 7, // 7 days
