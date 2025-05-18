@@ -52,7 +52,7 @@ async function seedNFTs() {
       // User's NFTs (not for sale)
       {
         name: 'Legendary Sword',
-        image: '/placeholder.svg?height=200&width=200&text=Legendary+Sword',
+        image: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8dmlkZW8lMjBnYW1lc3xlbnwwfHwwfHx8MA%3D%3D',
         game: 'Epic Quest',
         rarity: 'Legendary',
         category: 'Weapon',
@@ -69,7 +69,7 @@ async function seedNFTs() {
       },
       {
         name: 'Golden Shield',
-        image: '/placeholder.svg?height=200&width=200&text=Golden+Shield',
+        image: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8dmlkZW8lMjBnYW1lc3xlbnwwfHwwfHx8MA%3D%3D',
         game: 'Epic Quest',
         rarity: 'Epic',
         category: 'Armor',
@@ -86,7 +86,7 @@ async function seedNFTs() {
       },
       {
         name: 'Mystic Staff',
-        image: '/placeholder.svg?height=200&width=200&text=Mystic+Staff',
+        image: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8dmlkZW8lMjBnYW1lc3xlbnwwfHwwfHx8MA%3D%3D',
         game: 'Wizard Wars',
         rarity: 'Rare',
         category: 'Weapon',
@@ -103,7 +103,7 @@ async function seedNFTs() {
       },
       {
         name: 'Dragon Mount',
-        image: '/placeholder.svg?height=200&width=200&text=Dragon+Mount',
+        image: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8dmlkZW8lMjBnYW1lc3xlbnwwfHwwfHx8MA%3D%3D',
         game: 'Dragon Riders',
         rarity: 'Legendary',
         category: 'Mount',
@@ -122,7 +122,7 @@ async function seedNFTs() {
       // Marketplace NFTs (for sale)
       {
         name: 'Enchanted Bow',
-        image: '/placeholder.svg?height=200&width=200&text=Enchanted+Bow',
+        image: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8dmlkZW8lMjBnYW1lc3xlbnwwfHwwfHx8MA%3D%3D',
         game: 'Epic Quest',
         rarity: 'Epic',
         category: 'Weapon',
@@ -140,7 +140,7 @@ async function seedNFTs() {
       },
       {
         name: 'Shadow Cloak',
-        image: '/placeholder.svg?height=200&width=200&text=Shadow+Cloak',
+        image: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8dmlkZW8lMjBnYW1lc3xlbnwwfHwwfHx8MA%3D%3D',
         game: 'Shadow Assassin',
         rarity: 'Epic',
         category: 'Armor',
@@ -158,7 +158,7 @@ async function seedNFTs() {
       },
       {
         name: 'Phoenix Feather',
-        image: '/placeholder.svg?height=200&width=200&text=Phoenix+Feather',
+        image: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8dmlkZW8lMjBnYW1lc3xlbnwwfHwwfHx8MA%3D%3D',
         game: 'Wizard Wars',
         rarity: 'Legendary',
         category: 'Collectible',
@@ -176,7 +176,7 @@ async function seedNFTs() {
       },
       {
         name: 'Racing Chariot',
-        image: '/placeholder.svg?height=200&width=200&text=Racing+Chariot',
+        image: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8dmlkZW8lMjBnYW1lc3xlbnwwfHwwfHx8MA%3D%3D',
         game: 'Racing Legends',
         rarity: 'Rare',
         category: 'Mount',
@@ -194,7 +194,7 @@ async function seedNFTs() {
       },
       {
         name: 'Dragon Egg',
-        image: '/placeholder.svg?height=200&width=200&text=Dragon+Egg',
+        image: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8dmlkZW8lMjBnYW1lc3xlbnwwfHwwfHx8MA%3D%3D',
         game: 'Dragon Riders',
         rarity: 'Epic',
         category: 'Collectible',

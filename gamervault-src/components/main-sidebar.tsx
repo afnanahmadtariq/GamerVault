@@ -26,7 +26,7 @@ export function MainSidebar() {
   const userData = {
     name: user?.name || "Player One",
     email: user?.email || "player@example.com",
-    image: user?.image || "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=100&h=100&fit=crop&q=80", // Updated Unsplash image
+    image: user?.image || "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8dmlkZW8lMjBnYW1lc3xlbnwwfHwwfHx8MA%3D%3D", // Updated Unsplash image
     level: 42,
     notifications: 3,
   }

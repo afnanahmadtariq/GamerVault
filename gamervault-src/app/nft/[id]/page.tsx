@@ -68,7 +68,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
         {
           id: "nft-1",
           name: "Legendary Sword",
-          image: "/placeholder.svg?height=500&width=500&text=Legendary+Sword",
+          image: "https://www.freepik.com/free-photos-vectors/legendary-sword",
           game: "Epic Quest",
           rarity: "Legendary",
           acquired: "2023-05-15",
@@ -88,7 +88,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
         {
           id: "nft-2",
           name: "Golden Shield",
-          image: "/placeholder.svg?height=500&width=500&text=Golden+Shield",
+          image: "https://www.freepik.com/free-photos-vectors/golden-shield",
           game: "Epic Quest",
           rarity: "Epic",
           acquired: "2023-06-22",
@@ -116,7 +116,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
         {
           id: "market-1",
           name: "Excalibur",
-          image: "/placeholder.svg?height=500&width=500&text=Excalibur",
+          image: "https://www.freepik.com/free-photos-vectors/excalibur",
           game: "Epic Quest",
           rarity: "Legendary",
           price: 2500,
@@ -139,7 +139,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
         {
           id: "market-2",
           name: "Phoenix Mount",
-          image: "/placeholder.svg?height=500&width=500&text=Phoenix+Mount",
+          image: "https://www.freepik.com/free-photos-vectors/phoenix-mount",
           game: "Dragon Riders",
           rarity: "Legendary",
           price: 5000,
@@ -240,7 +240,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card className="overflow-hidden">
               <div className="aspect-square w-full bg-muted relative">
-                <img src={nft.image || "https://source.unsplash.com/ZtxED1cpB1E/500x500"} alt={nft.name} className="h-full w-full object-cover" />
+                <img src={nft.image || "https://www.freepik.com/free-photos-vectors/recycle-symbol"} alt={nft.name} className="h-full w-full object-cover" />
                 <div className="absolute top-4 right-4 flex gap-2">
                   <Button variant="secondary" size="icon" className="rounded-full h-8 w-8">
                     <Share2 className="h-4 w-4" />

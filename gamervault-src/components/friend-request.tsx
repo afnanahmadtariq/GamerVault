@@ -15,7 +15,7 @@ export function FriendRequest({ name, image, mutualFriends }: FriendRequestProps
     <div className="flex items-center justify-between w-full">
       <div className="flex items-center gap-3">
         <Avatar>
-          <AvatarImage src={image || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&q=80'} alt={name} />
+          <AvatarImage src={image || 'https://images.unsplash.com/photo-1593118247619-e2d6f056869e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHZpZGVvJTIwZ2FtZXN8ZW58MHx8MHx8fDA%3D'} alt={name} />
           <AvatarFallback>{name.charAt(0)}</AvatarFallback>
         </Avatar>
         <div>

@@ -49,7 +49,7 @@ export function SocialPost({  author,
         <div className="flex justify-between items-start">
           <div className="flex items-start gap-3">
             <Avatar>
-              <AvatarImage src={author.image || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&q=80'} alt={author.name} />
+              <AvatarImage src={author.image || 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dmlkZW8lMjBnYW1lc3xlbnwwfHwwfHx8MA%3D%3D'} alt={author.name} />
               <AvatarFallback>{author.name.charAt(0)}</AvatarFallback>
             </Avatar>
             <div>
@@ -70,7 +70,7 @@ export function SocialPost({  author,
         <p>{content}</p>
         {postImage && (
           <div className="rounded-md overflow-hidden">
-            <img src={postImage || 'https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=1200&h=800&fit=crop&q=80'} alt="Post content" className="w-full h-auto" />
+            <img src={postImage || 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dmlkZW8lMjBnYW1lc3xlbnwwfHwwfHx8MA%3D%3D'} alt="Post content" className="w-full h-auto" />
           </div>
         )}
       </CardContent>

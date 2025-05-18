@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
+import { getRandomImageUrl } from "@/lib/utils";
 
 interface MarketplaceNFTProps {
   id: string;
@@ -53,7 +54,7 @@ export function MarketplaceNFT({
       <div className="aspect-square relative">
         {image ? (
           <Image
-            src={image || 'https://images.unsplash.com/photo-1554941829-202a0b2403b8?w=800&h=800&fit=crop&q=80'}
+            src={getRandomImageUrl()}
             alt={name}
             fill
             className="object-cover transition-all hover:scale-105"

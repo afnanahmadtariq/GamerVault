@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardFooter, CardHeader } from "@/components/ui/card";
 import { Calendar, ExternalLink } from "lucide-react";
+import { getRandomImageUrl } from "@/lib/utils";
 
 interface NFTCardProps {
   id: string;
@@ -22,7 +23,7 @@ export function NFTCard({ id, name, image, game, rarity, acquired }: NFTCardProp
       <div className="aspect-square relative">
         {image ? (
           <Image
-            src={image || 'https://images.unsplash.com/photo-1634733160119-0951363c8a7c?w=800&h=800&fit=crop&q=80'}
+            src={getRandomImageUrl()}
             alt={name}
             fill
             className="object-cover transition-all hover:scale-105"

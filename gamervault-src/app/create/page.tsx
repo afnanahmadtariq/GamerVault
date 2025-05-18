@@ -16,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { GamepadIcon as GameController, ImagePlus, LogOut, Paintbrush, Upload } from "lucide-react"
 import { Slider } from "@/components/ui/slider"
 import { LanguageSelector } from "@/components/language-selector"
+import { getRandomImageUrl } from "@/lib/utils"
 
 export default function CreatePage() {
   const router = useRouter()
@@ -159,7 +160,7 @@ export default function CreatePage() {
                   <div className="text-xs text-muted-foreground">{user.email}</div>
                 </div>
                 <Avatar>
-                  <AvatarImage src={user.avatar || "https://source.unsplash.com/QXevDflbl8A/100x100"} alt={user.name} />
+                  <AvatarImage src={user.avatar || getRandomImageUrl()} alt={user.name} />
                   <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <Button variant="ghost" size="icon" onClick={handleLogout}>
@@ -275,7 +276,7 @@ export default function CreatePage() {
                           {previewImage ? (
                             <div className="relative w-full h-full">
                               <img
-                                src={previewImage || "https://source.unsplash.com/eOpewngf68w/400x300"}
+                                src={previewImage || getRandomImageUrl()}
                                 alt="Preview"
                                 className="w-full h-full object-contain"
                               />

@@ -105,15 +105,9 @@ export async function POST(req: NextRequest) {
     try {
       // Create JWT token with user ID and minimal payload
       const token = sign(
-        { 
-          userId: user.id.toString(), 
-          email: user.email,
-          // Avoid putting sensitive data in JWT
-        },
-        JWT_SECRET,
-        {
-          expiresIn: "7d", // Token expires in 7 days
-        }
+        { userId: user.id.toString(), email: user.email },
+        JWT_SECRET, // Used as a raw string
+        { expiresIn: "7d" }
       );
 
       const response = NextResponse.json({

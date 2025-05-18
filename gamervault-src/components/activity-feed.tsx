@@ -60,7 +60,7 @@ export function ActivityFeed() {
           return (
             <Avatar className="h-8 w-8">
               <AvatarImage 
-                src={activity.metadata.userImage || 'https://images.unsplash.com/photo-1618641986557-1ecd230959aa?w=100&h=100&fit=crop&q=80'} 
+                src={activity.metadata.userImage || 'https://images.unsplash.com/photo-1551103782-8ab07afd45c1?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHZpZGVvJTIwZ2FtZXN8ZW58MHx8MHx8fDA%3D'} 
                 alt={activity.metadata.userName || "User"} 
               />
               <AvatarFallback>{activity.metadata.userInitials || "U"}</AvatarFallback>

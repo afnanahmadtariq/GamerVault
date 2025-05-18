@@ -17,7 +17,7 @@ export function UserCard({ name, image, mutualFriends, level, game }: UserCardPr
     <div className="flex items-center justify-between w-full">
       <div className="flex items-center gap-3">
         <Avatar>
-          <AvatarImage src={image || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop&q=80'} alt={name} />
+          <AvatarImage src={image || 'https://plus.unsplash.com/premium_photo-1677870728110-3b3b41677a9b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dmlkZW8lMjBnYW1lc3xlbnwwfHwwfHx8MA%3D%3D'} alt={name} />
           <AvatarFallback>{name.charAt(0)}</AvatarFallback>
         </Avatar>
         <div className="min-w-0">
