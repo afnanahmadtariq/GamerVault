@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        MONGODB_URI: mongodb+srv://xxxua:pluH6e7jXGPxE0lB@userdata.9jlqo6m.mongodb.net/?retryWrites=true&w=majority&appName=UserData
+        MONGODB_URI: mongodb://mongo_db-part2:27017/nextjsdb
         JWT_SECRET: 3f66f61e8210bfd24cb74353c2228408e5d3d996a0de3f6e02604675608ddc9
     container_name: gamervault-part2
     ports:
@@ -14,7 +14,7 @@ services:
     depends_on:
       - mongo
     environment:
-      - MONGODB_URI=mongodb+srv://xxxua:pluH6e7jXGPxE0lB@userdata.9jlqo6m.mongodb.net/?retryWrites=true&w=majority&appName=UserData
+      - MONGODB_URI=mongodb://mongo_db-part2:27017/nextjsdb
       - JWT_SECRET=3f66f61e8210bfd24cb74353c2228408e5d3d996a0de3f6e02604675608ddc9
 
   mongo:
