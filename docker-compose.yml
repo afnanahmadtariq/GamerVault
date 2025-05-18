@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   web:
-    build:  
+    build:
       context: .
       dockerfile: Dockerfile
       args:
@@ -16,9 +16,9 @@ services:
     environment:
       - MONGODB_URI=mongodb://mongo:28017/nextjsdb
       - JWT_SECRET=3f66f61e8210bfd24cb74353c2228408e5d3d996a0de3f6e02604675608ddc9
-    # volumes:
-    #   - ./gamervault-src:/gamervault-src
-    #   - /gamervault-src/node_modules
+    volumes:
+      - ./gamervault-src:/gamervault-src
+      - /gamervault-src/node_modules
 
 
 
