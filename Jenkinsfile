@@ -17,7 +17,7 @@ pipeline {
     stage('Build and Deploy') {
       steps {
         script {
-          dir('part2') {  // Ensure we're in the correct directory
+          // dir('part2') {  // Ensure we're in the correct directory
             try {
               // Force recreation of containers to avoid the ContainerConfig error
               sh 'docker-compose -p $PROJECT_NAME -f docker-compose.yml down -v --remove-orphans || true'
@@ -28,7 +28,7 @@ pipeline {
               currentBuild.result = 'FAILURE'
               error "Failed to build and deploy: ${e.message}"
             }
-          }
+          // }
         }
       }
     }
