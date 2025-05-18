@@ -2,7 +2,8 @@
   "name": "gamervault",
   "version": "0.1.0",
   "private": true,
-  "type": "module",  "scripts": {
+  "type": "module",
+  "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -54,7 +55,7 @@
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.454.0",
     "mongoose": "^8.14.3",
-    "next": "15.2.4",
+    "next": "^15.2.4",
     "next-themes": "^0.4.4",
     "react": "^19",
     "react-day-picker": "8.10.1",
