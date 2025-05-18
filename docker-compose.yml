@@ -16,7 +16,8 @@ services:
       - MONGODB_URI=mongodb://mongo:28017/nextjsdb
       - JWT_SECRET=3f66f61e8210bfd24cb74353c2228408e5d3d996a0de3f6e02604675608ddc9
     volumes:
-      - ./gamervault-src2:/gamervault-src
+      - ./gamervault-src:/gamervault-src
+
 
   mongo:
     image: mongo:6
@@ -24,7 +25,7 @@ services:
     ports:
       - '28017:27017'
     volumes:
-      - mongo2_data:/data/db
+      - mongo_data:/data/db
 
 volumes:
-  mongo2_data:
+  mongo_data:
