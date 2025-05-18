@@ -54,9 +54,7 @@ export async function POST(request: NextRequest) {
     // Validate email format
     if (!/^\S+@\S+\.\S+$/.test(email)) {
       return errorResponse('Please provide a valid email address', 400);
-    }
-
-    // Connect to database
+    }    // Connect to database
     try {
       await dbConnect();
       devLog("Connected to MongoDB successfully");
@@ -65,18 +63,12 @@ export async function POST(request: NextRequest) {
       return errorResponse('Database connection error. Please try again later.', 500);
     }
 
-    // Start transaction to ensure data consistency
-    const session = await mongoose.startSession();
-    session.startTransaction();
-
     try {
       // Check if user already exists
-      const existingUser = await User.findOne({ email }).session(session);
+      const existingUser = await User.findOne({ email });
 
       if (existingUser) {
         devLog("Registration attempt with existing email:", email);
-        await session.abortTransaction();
-        session.endSession();
         // Use vague message to prevent user enumeration
         return errorResponse('An account with this email already exists', 400);
       }
@@ -89,14 +81,10 @@ export async function POST(request: NextRequest) {
         image: '/placeholder-user.jpg', // Add default placeholder image
       });
       
-      await user.save({ session });
+      await user.save();
       
       // Create additional user-related records here if needed
       // For example, automatically create an empty user profile
-      
-      // Commit the transaction
-      await session.commitTransaction();
-      session.endSession();
       
       devLog("User created successfully:", { id: user.id, name: user.name, email: user.email });
       
@@ -111,12 +99,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { message: 'User registered successfully', user: userResponse },
         { status: 201 }
-      );
-    } catch (mongoError) {
-      // Rollback transaction on error
-      await session.abortTransaction();
-      session.endSession();
-      
+      );    } catch (mongoError) {
       console.error('MongoDB operation error:', mongoError);
       
       // Check for duplicate key error (another way to detect existing user)

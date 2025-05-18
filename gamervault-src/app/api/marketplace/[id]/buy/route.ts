@@ -46,16 +46,11 @@ export async function POST(
     if (nft.owner._id.toString() === userId) {
       return errorResponse("You cannot buy your own NFT", 400);
     }
-    
-    // Start a transaction session
-    const session = await mongoose.startSession();
-    session.startTransaction();
+      // Store previous owner information before updating
+    const previousOwnerName = nft.owner.name;
+    const previousOwnerId = nft.owner._id;
     
     try {
-      // Store previous owner information before updating
-      const previousOwnerName = nft.owner.name;
-      const previousOwnerId = nft.owner._id;
-      
       // Update NFT owner and set not for sale
       nft.previousOwners = nft.previousOwners || [];
       nft.previousOwners.push(previousOwnerId as unknown as mongoose.Schema.Types.ObjectId);
@@ -68,7 +63,7 @@ export async function POST(
       nft.forSale = false;
       nft.acquiredDate = new Date();
       
-      await nft.save({ session });
+      await nft.save();
       
       // Common metadata for activities
       const commonMetadata = {
@@ -79,7 +74,7 @@ export async function POST(
       };
       
       // Create activity for buyer
-      await Activity.create([{
+      await Activity.create({
         userId: new mongoose.Types.ObjectId(userId),
         type: 'purchase' as const,
         title: 'NFT Purchased',
@@ -91,10 +86,10 @@ export async function POST(
           seller: previousOwnerName,
           sellerId: previousOwnerId.toString()
         }
-      }], { session });
+      });
       
       // Create activity for seller
-      await Activity.create([{
+      await Activity.create({
         userId: previousOwnerId,
         type: 'purchase' as const,
         title: 'NFT Sold',
@@ -105,14 +100,10 @@ export async function POST(
           ...commonMetadata,
           buyerId: userId
         }
-      }], { session });
-      
-      await session.commitTransaction();
+      });
     } catch (error) {
-      await session.abortTransaction();
+      // Just throw the error, no transaction to abort
       throw error;
-    } finally {
-      session.endSession();
     }
     
     return NextResponse.json({ 

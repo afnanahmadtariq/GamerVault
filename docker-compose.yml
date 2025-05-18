@@ -22,8 +22,6 @@ services:
     container_name: mongo_db-part2
     volumes:
       - mongo_data:/data/db
-      - ./init-replica.js:/docker-entrypoint-initdb.d/init-replica.js
-    command: ["mongod", "--replSet", "rs0"] 
 
 volumes:
   mongo_data:
