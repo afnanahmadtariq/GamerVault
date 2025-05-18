@@ -25,7 +25,7 @@ RUN npm run build
 # Expose the app port
 EXPOSE 3000
 
-RUN npm run seed
+# RUN npm run seed
 
 # Start the app
 CMD ["npm", "start"]
