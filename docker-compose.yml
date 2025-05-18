@@ -22,7 +22,7 @@ services:
 
 
   mongo:
-    image: mongo:6
+    image: mongo
     container_name: mongo_db-part2
     ports:
       - '28017:27017'
