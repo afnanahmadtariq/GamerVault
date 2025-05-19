@@ -96,8 +96,8 @@ export default function RegisterPage() {
   )
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-background to-background/80 p-4">
-      <Card className="w-full max-w-md">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-background to-background/80 p-4 w-full">
+      <Card className="w-full max-w-md mx-auto">
         <CardHeader className="space-y-1">
           <div className="flex items-center justify-center gap-2 mb-2">
             <GameController className="h-6 w-6 text-primary" />
