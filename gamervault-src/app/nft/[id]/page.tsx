@@ -9,8 +9,9 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ArrowLeft, Calendar, GamepadIcon as GameController, LogOut, Share2, Trophy } from "lucide-react"
+import { ArrowLeft, Calendar, Share2, Trophy } from "lucide-react"
 import { NFTHistoryItem } from "@/components/nft-history-item"
+import { MainLayout } from "@/components/main-layout"
 
 export default function NFTDetailPage({ params }: { params: { id: string } }) {
   const router = useRouter()
@@ -41,13 +42,7 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
     setIsOwned(params.id.startsWith("nft-"))
 
     setIsLoading(false)
-  }, [params.id, router])
-
-  const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn")
-    localStorage.removeItem("user")
-    router.push("/")
-  }
+  }, [params.id])
 
   const handlePurchase = () => {
     // In a real app, this would initiate a blockchain transaction
@@ -167,237 +162,167 @@ export default function NFTDetailPage({ params }: { params: { id: string } }) {
 
   if (isLoading || !nft) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">Loading...</div>
-      </div>
+      <MainLayout>
+        <div className="flex items-center justify-center h-full">
+          <div className="text-center">Loading...</div>
+        </div>
+      </MainLayout>
     )
   }
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Link href="/" className="flex items-center gap-2">
-              <GameController className="h-6 w-6 text-primary" />
-              <span className="text-xl font-bold">GamerVault</span>
-            </Link>
-          </div>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link href="/marketplace" className="text-sm font-medium hover:text-primary">
-              Marketplace
-            </Link>
-            <Link href="/achievements" className="text-sm font-medium hover:text-primary">
-              Achievements
-            </Link>
-            <Link href="/leaderboard" className="text-sm font-medium hover:text-primary">
-              Leaderboard
-            </Link>
-          </nav>
-          <div className="flex items-center gap-4">
-            {user ? (
-              <div className="flex items-center gap-4">
-                <Link href="/dashboard">
-                  <Button variant="outline" size="sm">
-                    Dashboard
-                  </Button>
-                </Link>
-                <div className="hidden md:block">
-                  <div className="text-sm font-medium">{user.name}</div>
-                  <div className="text-xs text-muted-foreground">{user.email}</div>
-                </div>
-                <Avatar>
-                  <AvatarImage src={user.avatar || "https://source.unsplash.com/iFgRcqHznqg/100x100"} alt={user.name} />
-                  <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-                </Avatar>
-                <Button variant="ghost" size="icon" onClick={handleLogout}>
-                  <LogOut className="h-5 w-5" />
+    <MainLayout>
+      <div className="flex flex-col gap-6">
+        <div className="flex items-center gap-4">
+          <Button variant="outline" size="icon" onClick={() => router.back()}>
+            <ArrowLeft className="h-4 w-4" />
+            <span className="sr-only">Back</span>
+          </Button>
+          <h1 className="text-2xl font-bold tracking-tight">NFT Details</h1>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <Card className="overflow-hidden">
+            <div className="aspect-square w-full bg-muted relative">
+              <img src={nft.image || "https://www.freepik.com/free-photos-vectors/recycle-symbol"} alt={nft.name} className="h-full w-full object-cover" />
+              <div className="absolute top-4 right-4 flex gap-2">
+                <Button variant="secondary" size="icon" className="rounded-full h-8 w-8">
+                  <Share2 className="h-4 w-4" />
+                  <span className="sr-only">Share</span>
                 </Button>
               </div>
-            ) : (
-              <div className="flex items-center gap-2">
-                <Link href="/auth/login">
-                  <Button variant="outline">Login</Button>
-                </Link>
-                <Link href="/auth/register">
-                  <Button>Sign Up</Button>
-                </Link>
-              </div>
-            )}
-          </div>
-        </div>
-      </header>
-      <main className="flex-1 container py-6">
-        <div className="flex flex-col gap-6">
-          <div className="flex items-center gap-4">
-            <Button variant="outline" size="icon" onClick={() => router.back()}>
-              <ArrowLeft className="h-4 w-4" />
-              <span className="sr-only">Back</span>
-            </Button>
-            <h1 className="text-2xl font-bold tracking-tight">NFT Details</h1>
-          </div>
+            </div>
+          </Card>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="overflow-hidden">
-              <div className="aspect-square w-full bg-muted relative">
-                <img src={nft.image || "https://www.freepik.com/free-photos-vectors/recycle-symbol"} alt={nft.name} className="h-full w-full object-cover" />
-                <div className="absolute top-4 right-4 flex gap-2">
-                  <Button variant="secondary" size="icon" className="rounded-full h-8 w-8">
-                    <Share2 className="h-4 w-4" />
-                    <span className="sr-only">Share</span>
-                  </Button>
+          <div className="flex flex-col gap-6">
+            <Card>
+              <CardHeader>
+                <div className="flex items-start justify-between">
+                  <div>
+                    <CardTitle className="text-2xl">{nft.name}</CardTitle>
+                    <CardDescription className="flex items-center gap-2 mt-1">
+                      <span>From {nft.game}</span>
+                      <span>•</span>
+                      <Badge
+                        variant={
+                          nft.rarity === "Legendary" ? "destructive" : nft.rarity === "Epic" ? "default" : "secondary"
+                        }
+                      >
+                        {nft.rarity}
+                      </Badge>
+                    </CardDescription>
+                  </div>
+                  {isOwned ? (
+                    <div className="flex items-center gap-2">
+                      <Calendar className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">Acquired {nft.acquired}</span>
+                    </div>
+                  ) : (
+                    <div className="text-right">
+                      <div className="text-sm text-muted-foreground">Price</div>
+                      <div className="text-2xl font-bold">{nft.price} coins</div>
+                    </div>
+                  )}
                 </div>
-              </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">{nft.description}</p>
+
+                <Separator className="my-6" />
+
+                <div className="space-y-4">
+                  <h3 className="font-semibold">Attributes</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    {nft.attributes.map((attr: any, index: number) => (
+                      <div key={index} className="flex flex-col gap-1 rounded-lg border p-3">
+                        <span className="text-xs text-muted-foreground">{attr.name}</span>
+                        <span className="font-medium">{attr.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter>
+                {isOwned ? (
+                  <div className="w-full flex flex-col gap-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Trophy className="h-5 w-5 text-yellow-500" />
+                        <span className="font-medium">Owned by You</span>
+                      </div>
+                      <Button variant="outline">Transfer</Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="w-full flex flex-col gap-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Avatar className="h-6 w-6">
+                          <AvatarFallback>{nft.seller.charAt(0)}</AvatarFallback>
+                        </Avatar>
+                        <span className="text-sm">
+                          Sold by <span className="font-medium">{nft.seller}</span>
+                        </span>
+                      </div>
+                    </div>
+                    <Button className="w-full" size="lg" onClick={handlePurchase}>
+                      Purchase for {nft.price} coins
+                    </Button>
+                    <p className="text-xs text-center text-muted-foreground">
+                      This is a simulated purchase. No actual blockchain transaction will occur.
+                    </p>
+                  </div>
+                )}
+              </CardFooter>
             </Card>
 
-            <div className="flex flex-col gap-6">
-              <Card>
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <CardTitle className="text-2xl">{nft.name}</CardTitle>
-                      <CardDescription className="flex items-center gap-2 mt-1">
-                        <span>From {nft.game}</span>
-                        <span>•</span>
-                        <Badge
-                          variant={
-                            nft.rarity === "Legendary" ? "destructive" : nft.rarity === "Epic" ? "default" : "secondary"
-                          }
-                        >
-                          {nft.rarity}
-                        </Badge>
-                      </CardDescription>
+            <Card>
+              <CardHeader>
+                <CardTitle>History</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Tabs defaultValue="timeline">
+                  <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="timeline">Timeline</TabsTrigger>
+                    <TabsTrigger value="transactions">Transactions</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="timeline" className="space-y-4 pt-4">
+                    <div className="space-y-4">
+                      {nft.history.map((item: any, index: number) => (
+                        <NFTHistoryItem
+                          key={index}
+                          date={item.date}
+                          event={item.event}
+                          price={item.price}
+                          isFirst={index === 0}
+                          isLast={index === nft.history.length - 1}
+                        />
+                      ))}
                     </div>
-                    {isOwned ? (
-                      <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-muted-foreground" />
-                        <span className="text-sm text-muted-foreground">Acquired {nft.acquired}</span>
+                  </TabsContent>
+                  <TabsContent value="transactions" className="pt-4">
+                    <div className="rounded-md border">
+                      <div className="grid grid-cols-3 p-3 text-sm font-medium">
+                        <div>Date</div>
+                        <div>Event</div>
+                        <div className="text-right">Price</div>
                       </div>
-                    ) : (
-                      <div className="text-right">
-                        <div className="text-sm text-muted-foreground">Price</div>
-                        <div className="text-2xl font-bold">{nft.price} coins</div>
-                      </div>
-                    )}
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">{nft.description}</p>
-
-                  <Separator className="my-6" />
-
-                  <div className="space-y-4">
-                    <h3 className="font-semibold">Attributes</h3>
-                    <div className="grid grid-cols-2 gap-4">
-                      {nft.attributes.map((attr: any, index: number) => (
-                        <div key={index} className="flex flex-col gap-1 rounded-lg border p-3">
-                          <span className="text-xs text-muted-foreground">{attr.name}</span>
-                          <span className="font-medium">{attr.value}</span>
+                      <Separator />
+                      {nft.history.map((item: any, index: number) => (
+                        <div key={index} className="grid grid-cols-3 p-3 text-sm">
+                          <div>{item.date}</div>
+                          <div>{item.event}</div>
+                          <div className="text-right">{item.price}</div>
                         </div>
                       ))}
                     </div>
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  {isOwned ? (
-                    <div className="w-full flex flex-col gap-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <Trophy className="h-5 w-5 text-yellow-500" />
-                          <span className="font-medium">Owned by You</span>
-                        </div>
-                        <Button variant="outline">Transfer</Button>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="w-full flex flex-col gap-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <Avatar className="h-6 w-6">
-                            <AvatarFallback>{nft.seller.charAt(0)}</AvatarFallback>
-                          </Avatar>
-                          <span className="text-sm">
-                            Sold by <span className="font-medium">{nft.seller}</span>
-                          </span>
-                        </div>
-                      </div>
-                      <Button className="w-full" size="lg" onClick={handlePurchase}>
-                        Purchase for {nft.price} coins
-                      </Button>
-                      <p className="text-xs text-center text-muted-foreground">
-                        This is a simulated purchase. No actual blockchain transaction will occur.
-                      </p>
-                    </div>
-                  )}
-                </CardFooter>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>History</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Tabs defaultValue="timeline">
-                    <TabsList className="grid w-full grid-cols-2">
-                      <TabsTrigger value="timeline">Timeline</TabsTrigger>
-                      <TabsTrigger value="transactions">Transactions</TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="timeline" className="space-y-4 pt-4">
-                      <div className="space-y-4">
-                        {nft.history.map((item: any, index: number) => (
-                          <NFTHistoryItem
-                            key={index}
-                            date={item.date}
-                            event={item.event}
-                            price={item.price}
-                            isFirst={index === 0}
-                            isLast={index === nft.history.length - 1}
-                          />
-                        ))}
-                      </div>
-                    </TabsContent>
-                    <TabsContent value="transactions" className="pt-4">
-                      <div className="rounded-md border">
-                        <div className="grid grid-cols-3 p-3 text-sm font-medium">
-                          <div>Date</div>
-                          <div>Event</div>
-                          <div className="text-right">Price</div>
-                        </div>
-                        <Separator />
-                        {nft.history.map((item: any, index: number) => (
-                          <div key={index} className="grid grid-cols-3 p-3 text-sm">
-                            <div>{item.date}</div>
-                            <div>{item.event}</div>
-                            <div className="text-right">{item.price}</div>
-                          </div>
-                        ))}
-                      </div>
-                    </TabsContent>
-                  </Tabs>
-                </CardContent>
-              </Card>
-            </div>
+                  </TabsContent>
+                </Tabs>
+              </CardContent>
+            </Card>
           </div>
         </div>
-      </main>
-      <footer className="border-t py-6 md:py-0">
-        <div className="container flex flex-col items-center justify-between gap-4 md:h-16 md:flex-row">
-          <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} GamerVault. All rights reserved.
-          </p>
-          <div className="flex gap-4 text-sm text-muted-foreground">
-            <Link href="#" className="hover:text-foreground">
-              Terms
-            </Link>
-            <Link href="#" className="hover:text-foreground">
-              Privacy
-            </Link>
-            <Link href="#" className="hover:text-foreground">
-              Contact
-            </Link>
-          </div>
-        </div>
-      </footer>
-    </div>
+      </div>
+    </MainLayout>
   )
 }
