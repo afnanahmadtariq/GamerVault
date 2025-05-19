@@ -4,7 +4,6 @@ import { useAuth } from "@/hooks/use-auth";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Loader2 } from "lucide-react";
-import { deleteAuthCookie } from "@/lib/auth-cookies";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -12,11 +11,9 @@ interface ProtectedRouteProps {
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const { isAuthenticated, isLoading } = useAuth();
-  const router = useRouter();  useEffect(() => {
+  const router = useRouter();
+  useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      // Delete any existing token cookie to ensure clean state
-      deleteAuthCookie();
-      
       // Save current path for redirecting back after login
       const currentPath = window.location.pathname;
       router.push(`/auth/login?redirect=${encodeURIComponent(currentPath)}`);
