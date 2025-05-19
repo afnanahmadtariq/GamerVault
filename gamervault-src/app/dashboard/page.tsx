@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -12,8 +10,7 @@ import { ActivityFeed } from "@/components/activity-feed"
 
 export default function DashboardPage() {
   return (
-    <MainLayout>
-      <PageHeader title="Dashboard" description="Welcome back, Player One" />
+    <MainLayout>      <PageHeader title="Dashboard" description="Welcome back, Player One" />
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <Card>
@@ -213,8 +210,7 @@ export default function DashboardPage() {
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
-      </Tabs>
+        </TabsContent>      </Tabs>
     </MainLayout>
   )
 }

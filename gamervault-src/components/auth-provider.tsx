@@ -2,6 +2,8 @@
 
 import React, { createContext, useState, useEffect, useCallback, useContext } from "react";
 import { useRouter } from "next/navigation";
+import { deleteAuthCookie } from "@/lib/auth-cookies";
+import { apiGet, apiPost } from "@/lib/api-client";
 
 // Define user type
 interface User {
@@ -40,31 +42,18 @@ interface AuthProviderProps {
 export default function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
-  const fetchUser = useCallback(async () => {
+  const router = useRouter();  const fetchUser = useCallback(async () => {
     setIsLoading(true);
     try {
-      const res = await fetch("/api/user/me", { 
-        credentials: "include",
-        cache: "no-store"
-      });
-
-      if (res.ok) {
-        const userData = await res.json();
-        setUser(userData.user);
-      } else {
-        // Token is likely invalid/expired
-        setUser(null);
-        
-        // If status is 401 (Unauthorized), redirect to login page
-        if (res.status === 401) {
-          router.push('/auth/login');
-        }
-      }
+      // Using apiGet which will automatically handle 401s and token invalidation
+      const userData = await apiGet("/api/user/me");
+      setUser(userData.user);
     } catch (error) {
       console.error("Failed to fetch user:", error);
       setUser(null);
-      // On error, redirect to login as well
+      // apiGet will automatically handle token invalidation on 401s,
+      // but we'll still handle other errors by clearing the cookie and redirecting
+      deleteAuthCookie();
       router.push('/auth/login');
     }
     setIsLoading(false);
@@ -76,58 +65,50 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-        credentials: "include",
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        return { success: false, error: data.error || "Login failed" };
-      }
-
+      const data = await apiPost("/api/auth/login", { email, password });
       await fetchUser();
       return { success: true };
     } catch (error) {
       console.error("Login error:", error);
-      return { success: false, error: "An unexpected error occurred" };
+      return { 
+        success: false, 
+        error: error instanceof Error ? error.message : "Login failed" 
+      };
     }
   };
   const register = async (username: string, email: string, password: string) => {
     try {
-      const response = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: username, email, password }),
-        credentials: "include",
+      await apiPost("/api/auth/register", { 
+        name: username, 
+        email, 
+        password 
       });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        return { success: false, error: data.error || "Registration failed" };
-      }
-
+      
+      // After successful registration, log the user in
       return await login(email, password);
     } catch (error) {
       console.error("Registration error:", error);
-      return { success: false, error: "An unexpected error occurred" };
+      return { 
+        success: false, 
+        error: error instanceof Error ? error.message : "Registration failed" 
+      };
     }
-  };
-  const logout = async () => {
+  };  const logout = async () => {
     try {
-      await fetch("/api/auth/logout", {
-        method: "POST",
-        credentials: "include"
-      });
+      await apiPost("/api/auth/logout");
       setUser(null);
-      // No need to navigate here, let the component handle navigation
+      
+      // Make sure to delete the cookie client-side as well
+      deleteAuthCookie();
+      
+      // Redirect to login page
+      router.push('/auth/login');
       return { success: true };
     } catch (error) {
       console.error("Logout error:", error);
+      // Even if API fails, clear cookie and user state
+      deleteAuthCookie();
+      router.push('/auth/login');
       return { success: false, error: "Failed to logout" };
     }
   };

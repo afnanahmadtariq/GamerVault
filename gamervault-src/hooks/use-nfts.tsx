@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import { apiGet } from "@/lib/api-client";
 
 export interface NFT {
   id: string;
@@ -73,7 +74,6 @@ export function useNFTs() {
   });
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
-
   // Fetch NFTs with current filters and pagination
   const fetchNFTs = async () => {
     try {
@@ -90,12 +90,15 @@ export function useNFTs() {
       if (filters.sortBy) params.append('sortBy', filters.sortBy);
       if (filters.sortOrder) params.append('sortOrder', filters.sortOrder);
       
-      // In a real implementation, we would fetch from the API:
-      // const response = await fetch(`/api/nfts?${params.toString()}`);
-      // if (!response.ok) {
-      //   throw new Error('Failed to fetch NFTs');
+      // In a real implementation, we would fetch from the API using our api-client:
+      // try {
+      //   const data = await apiGet(`/api/nfts?${params.toString()}`);
+      //   // No need to check for response.ok as apiGet handles that automatically
+      //   // and will handle token invalidation if needed
+      // } catch (error) {
+      //   // apiGet will automatically handle 401 errors
+      //   throw error;
       // }
-      // const data = await response.json();
       
       // For now, we'll use mock data
       await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API delay
@@ -222,26 +225,27 @@ export function useNFTs() {
           mythic: 1
         }
       };
-      
-      // Apply search filter
-      if (filters.search) {
-        const search = filters.search.toLowerCase();
-        const filterBySearch = (nft: NFT) => {
-          return (
-            nft.name.toLowerCase().includes(search) ||
-            nft.game.toLowerCase().includes(search) ||
-            nft.category?.toLowerCase().includes(search) ||
-            nft.rarity.toLowerCase().includes(search)
-          );
-        };
+        // Apply search filter and other filters
+      const search = filters.search?.toLowerCase();
+      const filterBySearch = (nft: NFT) => {
+        // If no search term, include all NFTs
+        if (!search) return true;
         
-        mockOwnedNFTs = mockOwnedNFTs.filter(filterBySearch);
-        mockMarketplaceNFTs = mockMarketplaceNFTs.filter(filterBySearch);
-      }
+        return (
+          nft.name.toLowerCase().includes(search) ||
+          nft.game.toLowerCase().includes(search) ||
+          nft.category?.toLowerCase().includes(search) ||
+          nft.rarity.toLowerCase().includes(search)
+        );
+      };
       
-      setOwnedNFTs(mockOwnedNFTs);
-      setMarketplaceNFTs(mockMarketplaceNFTs);
-      setAllNFTs([...mockOwnedNFTs, ...mockMarketplaceNFTs]);
+      // Filter the NFTs without modifying the original arrays
+      const filteredOwnedNFTs = mockOwnedNFTs.filter(filterBySearch);
+      const filteredMarketplaceNFTs = mockMarketplaceNFTs.filter(filterBySearch);
+      
+      setOwnedNFTs(filteredOwnedNFTs);
+      setMarketplaceNFTs(filteredMarketplaceNFTs);
+      setAllNFTs([...filteredOwnedNFTs, ...filteredMarketplaceNFTs]);
       setStats(mockStats);
       setPagination({
         page: 1,
@@ -271,21 +275,17 @@ export function useNFTs() {
   const changePage = (page: number) => {
     setPagination(prev => ({ ...prev, page }));
   };
-
   // Purchase NFT
   const purchaseNFT = async (nftId: string) => {
     try {
-      // In a real implementation:
-      // const response = await fetch(`/api/marketplace/${nftId}/buy`, {
-      //   method: 'POST',
-      // });
-      
-      // if (!response.ok) {
-      //   const error = await response.json();
-      //   throw new Error(error.error || 'Failed to purchase NFT');
+      // In a real implementation using our API client:
+      // try {
+      //   const result = await apiPost(`/api/marketplace/${nftId}/buy`);
+      //   // apiPost will automatically handle auth errors and token invalidation
+      // } catch (error) {
+      //   // Handle specific errors from the API if needed
+      //   throw error;
       // }
-      
-      // const result = await response.json();
       
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500));
