@@ -52,9 +52,8 @@ export function NFTCard({ id, name, image, game, rarity, acquired }: NFTCardProp
             {acquired}
           </div>
         </div>
-      </CardHeader>
-      <CardFooter className="p-4 pt-0">
-        <Link href={`/inventory/${id}`} className="w-full">
+      </CardHeader>      <CardFooter className="p-4 pt-0">
+        <Link href={`/nft/${id}`} className="w-full">
           <Button variant="outline" className="w-full">
             <ExternalLink className="h-4 w-4 mr-2" />
             View Details

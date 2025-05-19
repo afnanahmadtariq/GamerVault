@@ -86,10 +86,9 @@ export function MarketplaceNFT({
       </CardHeader>      <CardContent className="p-4 pt-0">
         <div className="text-xs text-muted-foreground">
           {seller ? `Seller: ${seller.name}` : (category ? `Category: ${category}` : game ? `Game: ${game}` : '')}
-        </div>
-      </CardContent>
+        </div>      </CardContent>
       <CardFooter className="p-4">
-        <Link href={`/marketplace/${id}`} className="w-full">
+        <Link href={`/nft/${id}`} className="w-full">
           <Button className="w-full">View & Purchase</Button>
         </Link>
       </CardFooter>

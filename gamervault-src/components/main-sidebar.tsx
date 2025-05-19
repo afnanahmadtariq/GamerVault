@@ -100,6 +100,14 @@ export function MainSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
+            <SidebarMenuButton asChild isActive={pathname === "/nfts"}>
+              <Link href="/nfts">
+                <Award className="h-4 w-4" />
+                <span>NFTs</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
             <SidebarMenuButton asChild isActive={pathname === "/inventory"}>
               <Link href="/inventory">
                 <Wallet className="h-4 w-4" />

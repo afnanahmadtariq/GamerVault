@@ -41,7 +41,6 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
-
   const fetchUser = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -54,14 +53,22 @@ export default function AuthProvider({ children }: AuthProviderProps) {
         const userData = await res.json();
         setUser(userData.user);
       } else {
+        // Token is likely invalid/expired
         setUser(null);
+        
+        // If status is 401 (Unauthorized), redirect to login page
+        if (res.status === 401) {
+          router.push('/auth/login');
+        }
       }
     } catch (error) {
       console.error("Failed to fetch user:", error);
       setUser(null);
+      // On error, redirect to login as well
+      router.push('/auth/login');
     }
     setIsLoading(false);
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     fetchUser();
